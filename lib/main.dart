@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:project_haajar/router.dart';
 import 'package:project_haajar/screens/authentication/splash_screen.dart';
 
 Future main() async {
   await dotenv.load(fileName: ".env");
   runApp(
     ProviderScope(
-      child: MaterialApp(
-        home: const MyApp(),
+      child: MaterialApp.router(
+        routerConfig: CustomRouter.routerFunction(),
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(255, 60, 15, 100),
+            seedColor: const Color.fromARGB(255, 69, 189, 157),
           ),
         ),
         debugShowCheckedModeBanner: false,

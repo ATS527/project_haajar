@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:project_haajar/providers/appwrite_client.dart';
-import 'package:project_haajar/screens/authentication/splash_screen.dart';
+import 'package:project_haajar/router.dart';
 import 'package:project_haajar/screens/bottom_navigation/assignments_view.dart';
 import 'package:project_haajar/screens/bottom_navigation/dashboard_view.dart';
 import 'package:project_haajar/screens/bottom_navigation/notifications_view.dart';
@@ -67,11 +68,9 @@ class _BottomNavigationBarCustomState
             onPressed: () async {
               final account = ref.read(appwriteProvider);
               account.deleteSession(sessionId: "current").then((value) {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (ctx) => const SplashScreen(),
-                  ),
-                );
+                context.go(AppRouteConstants.splashScreen);
+              }).catchError((err) {
+                context.go(AppRouteConstants.splashScreen);
               });
             },
           ),
