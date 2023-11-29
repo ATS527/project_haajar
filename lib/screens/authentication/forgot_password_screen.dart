@@ -1,8 +1,7 @@
-import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:project_haajar/providers/appwrite_client.dart';
+import 'package:project_haajar/providers/appwrite_authentication_provider.dart';
 import 'package:project_haajar/router.dart';
 
 class ForgotPasswordScreen extends ConsumerStatefulWidget {
@@ -19,21 +18,39 @@ class ForgotPasswordScreen extends ConsumerStatefulWidget {
 
 class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
-  late final Account account;
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-
-  @override
-  void initState() {
-    account = ref.read(appwriteProvider);
-    super.initState();
-  }
 
   @override
   void dispose() {
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
+  }
+
+  void forgotPassword() async {
+    ref
+        .read(appwriteAuthenticationProvider.notifier)
+        .confirmPasswordRecovery(
+          userId: widget.userId,
+          secret: widget.secret,
+          password: _passwordController.value.text,
+          passwordAgain: _confirmPasswordController.value.text,
+        )
+        .then((value) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Password Reset Successfully!"),
+        ),
+      );
+      context.go(AppRouteConstants.signInScreen);
+    }).catchError((err) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(err.toString()),
+        ),
+      );
+    });
   }
 
   @override
@@ -87,28 +104,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                   ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        final account = ref.read(appwriteProvider);
-                        await account
-                            .updateRecovery(
-                          userId: widget.userId,
-                          secret: widget.secret,
-                          password: _passwordController.value.text,
-                          passwordAgain: _confirmPasswordController.value.text,
-                        )
-                            .then((value) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("Password Reset Successfully!"),
-                            ),
-                          );
-                          context.go(AppRouteConstants.signInScreen);
-                        }).catchError((err) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(err.toString()),
-                            ),
-                          );
-                        });
+                        forgotPassword();
                       }
                     },
                     child: const Text("Reset Password"),

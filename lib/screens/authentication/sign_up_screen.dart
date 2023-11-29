@@ -1,8 +1,7 @@
-import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:project_haajar/providers/appwrite_client.dart';
+import 'package:project_haajar/providers/appwrite_authentication_provider.dart';
 import 'package:project_haajar/router.dart';
 
 class SignUpScreen extends ConsumerStatefulWidget {
@@ -18,13 +17,6 @@ class _SignInScreenState extends ConsumerState<SignUpScreen> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  late Account account;
-
-  @override
-  void initState() {
-    account = ref.read(appwriteProvider);
-    super.initState();
-  }
 
   @override
   void dispose() {
@@ -32,6 +24,54 @@ class _SignInScreenState extends ConsumerState<SignUpScreen> {
     _passwordController.dispose();
     _nameController.dispose();
     super.dispose();
+  }
+
+  void signUp() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Signing Up..."),
+        duration: Duration(seconds: 1),
+      ),
+    );
+
+    try {
+      ref
+          .read(appwriteAuthenticationProvider.notifier)
+          .registerUser(
+            email: _emailController.value.text,
+            password: _passwordController.value.text,
+            name: _nameController.value.text,
+          )
+          .then(
+        (value) {
+          showDialog(
+            context: context,
+            builder: (ctx) {
+              return AlertDialog(
+                title: const Text("Verification Mail sent"),
+                content: const Text(
+                  "Please verify your email by clicking the url in the mail from appwrite",
+                ),
+                actions: [
+                  ElevatedButton(
+                    onPressed: () {
+                      context.pop();
+                    },
+                    child: const Text("Ok"),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+      );
+    } catch (err) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(err.toString()),
+        ),
+      );
+    }
   }
 
   @override
@@ -111,60 +151,7 @@ class _SignInScreenState extends ConsumerState<SignUpScreen> {
                       ElevatedButton(
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("Signing Up..."),
-                                duration: Duration(seconds: 1),
-                              ),
-                            );
-
-                            try {
-                              account
-                                  .create(
-                                      userId: ID.unique(),
-                                      email: _emailController.value.text,
-                                      password: _passwordController.value.text)
-                                  .then((value) {
-                                account
-                                    .createEmailSession(
-                                        email: _emailController.value.text,
-                                        password:
-                                            _passwordController.value.text)
-                                    .then((value) {
-                                  account
-                                      .createVerification(
-                                          url:
-                                              "https://haajar-app.govindsr.me/confirmation-mail-screen")
-                                      .then((value) {
-                                    showDialog(
-                                        context: context,
-                                        builder: (ctx) {
-                                          return AlertDialog(
-                                            title: const Text(
-                                                "Verification Mail sent"),
-                                            content: const Text(
-                                              "Please verify your email by clicking the url in the mail from appwrite",
-                                            ),
-                                            actions: [
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  context.pop();
-                                                },
-                                                child: const Text("Ok"),
-                                              ),
-                                            ],
-                                          );
-                                        });
-                                  });
-                                });
-                              });
-                            } catch (err) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(err.toString()),
-                                ),
-                              );
-                            }
+                            signUp();
                           }
                         },
                         child: const Padding(

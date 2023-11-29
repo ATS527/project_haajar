@@ -1,8 +1,7 @@
-import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:project_haajar/providers/appwrite_client.dart';
+import 'package:project_haajar/providers/appwrite_authentication_provider.dart';
 import 'package:project_haajar/router.dart';
 
 class SignInScreen extends ConsumerStatefulWidget {
@@ -17,11 +16,9 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  late Account account;
 
   @override
   void initState() {
-    account = ref.read(appwriteProvider);
     super.initState();
   }
 
@@ -30,6 +27,37 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  void signIn() async {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Signing In..."),
+        duration: Duration(seconds: 1),
+      ),
+    );
+    try {
+      ref
+          .read(appwriteAuthenticationProvider.notifier)
+          .loginUser(
+              email: _emailController.value.text,
+              password: _passwordController.value.text)
+          .then((value) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Signed In Successfully"),
+            duration: Duration(seconds: 1),
+          ),
+        );
+        context.go(AppRouteConstants.bottomNavigationBar);
+      });
+    } catch (err) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(err.toString()),
+        ),
+      );
+    }
   }
 
   @override
@@ -91,37 +119,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                       ElevatedButton(
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("Signing In..."),
-                                duration: Duration(seconds: 1),
-                              ),
-                            );
-                            try {
-                              account
-                                  .createEmailSession(
-                                email: _emailController.value.text,
-                                password: _passwordController.value.text,
-                              )
-                                  .then(
-                                (value) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text("Signed In Successfully"),
-                                    ),
-                                  );
-
-                                  context.go(
-                                      AppRouteConstants.bottomNavigationBar);
-                                },
-                              );
-                            } catch (err) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(err.toString()),
-                                ),
-                              );
-                            }
+                            signIn();
                           }
                         },
                         child: const Padding(

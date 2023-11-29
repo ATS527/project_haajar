@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:project_haajar/providers/appwrite_client.dart';
+import 'package:project_haajar/providers/appwrite_authentication_provider.dart';
 import 'package:project_haajar/router.dart';
 import 'package:project_haajar/screens/bottom_navigation/assignments_view.dart';
 import 'package:project_haajar/screens/bottom_navigation/dashboard_view.dart';
@@ -40,7 +40,20 @@ class _BottomNavigationBarCustomState
   String titleView(index) {
     switch (index) {
       case 0:
-        return "Dashboard";
+        {
+          ref
+              .watch(appwriteAuthenticationProvider.notifier)
+              .build()
+              .then((value) {
+            print(value);
+            return "Welcome${value.name}";
+          }).catchError((err) {
+            return "Error";
+          });
+          print("ran here");
+          return "";
+        }
+
       case 1:
         return "Notifications";
       case 2:
@@ -50,6 +63,17 @@ class _BottomNavigationBarCustomState
       default:
         return "Unknown Screen";
     }
+  }
+
+  void logout() {
+    ref
+        .read(appwriteAuthenticationProvider.notifier)
+        .logoutUser()
+        .then((value) {
+      context.go(AppRouteConstants.splashScreen);
+    }).catchError((err) {
+      context.go(AppRouteConstants.splashScreen);
+    });
   }
 
   @override
@@ -65,14 +89,7 @@ class _BottomNavigationBarCustomState
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
-            onPressed: () async {
-              final account = ref.read(appwriteProvider);
-              account.deleteSession(sessionId: "current").then((value) {
-                context.go(AppRouteConstants.splashScreen);
-              }).catchError((err) {
-                context.go(AppRouteConstants.splashScreen);
-              });
-            },
+            onPressed: logout,
           ),
         ],
       ),

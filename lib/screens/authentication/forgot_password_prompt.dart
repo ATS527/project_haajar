@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:project_haajar/providers/appwrite_client.dart';
+import 'package:project_haajar/providers/appwrite_authentication_provider.dart';
 
 class ForgotPasswordPrompt extends ConsumerStatefulWidget {
   const ForgotPasswordPrompt({super.key});
@@ -18,6 +18,51 @@ class _ForgotPasswordPromptState extends ConsumerState<ForgotPasswordPrompt> {
   void dispose() {
     _emailController.dispose();
     super.dispose();
+  }
+
+  void forgotPasswordCreate() async {
+    ref
+        .read(appwriteAuthenticationProvider.notifier)
+        .createPasswordRecovery(email: _emailController.value.text)
+        .then(
+      (value) {
+        showDialog(
+          context: context,
+          builder: (ctx) {
+            return AlertDialog(
+              title: const Text("Success"),
+              content: const Text("Check your email for the reset link"),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("OK"),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    ).catchError((e) {
+      showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            title: const Text("Error"),
+            content: const Text("Something went wrong"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("OK"),
+              )
+            ],
+          );
+        },
+      );
+    });
   }
 
   @override
@@ -56,52 +101,7 @@ class _ForgotPasswordPromptState extends ConsumerState<ForgotPasswordPrompt> {
             ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  final account = ref.read(appwriteProvider);
-
-                  account
-                      .createRecovery(
-                    email: _emailController.value.text,
-                    url: "https://haajar-app.govindsr.me/forgot-password",
-                  )
-                      .then(
-                    (value) {
-                      showDialog(
-                        context: context,
-                        builder: (ctx) {
-                          return AlertDialog(
-                            title: const Text("Success"),
-                            content: const Text(
-                                "Check your email for the reset link"),
-                            actions: [
-                              TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text("OK"))
-                            ],
-                          );
-                        },
-                      );
-                    },
-                  ).catchError((e) {
-                    showDialog(
-                      context: context,
-                      builder: (ctx) {
-                        return AlertDialog(
-                          title: const Text("Error"),
-                          content: const Text("Something went wrong"),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text("OK"),
-                            )
-                          ],
-                        );
-                      },
-                    );
-                  });
+                  forgotPasswordCreate();
                 }
               },
               child: const Padding(

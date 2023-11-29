@@ -45,3 +45,6 @@ app.*.map.json
 
 #environment variables
 *.env
+
+#riverpod generated files
+*.g.dart
