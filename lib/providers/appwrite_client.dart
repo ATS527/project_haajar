@@ -1,19 +1,20 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:appwrite/appwrite.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final appwriteProvider = Provider<Account>(
-  (ref) {
-    Client client = Client();
-    client
-        .setEndpoint(
-          dotenv.env["appwrite_endpoint"] ?? "",
-        )
-        .setProject(
-          dotenv.env["project_id"] ?? "",
-        );
+part 'appwrite_client.g.dart';
 
-    final account = Account(client);
-    return account;
-  },
-);
+@Riverpod(keepAlive: true)
+Account appwrite(AppwriteRef ref) {
+  Client client = Client();
+  client
+      .setEndpoint(
+        dotenv.env["appwrite_endpoint"] ?? "",
+      )
+      .setProject(
+        dotenv.env["project_id"] ?? "",
+      );
+
+  final account = Account(client);
+  return account;
+}
