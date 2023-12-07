@@ -7,7 +7,7 @@ part of 'appwrite_authentication_provider.dart';
 // **************************************************************************
 
 String _$appwriteAuthenticationHash() =>
-    r'0634cb88cb1bc004e8231a50f7973b36789fd8cd';
+    r'76827e8a8fc671884238d5bdb9aa7bd0979e0054';
 
 /// See also [AppwriteAuthentication].
 @ProviderFor(AppwriteAuthentication)

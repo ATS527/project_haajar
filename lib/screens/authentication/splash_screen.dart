@@ -16,7 +16,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
-        future: ref.read(appwriteAuthenticationProvider.notifier).build(),
+        future: ref
+            .read(appwriteAuthenticationProvider.notifier)
+            .getCurrentlyLoggedInUser(),
         builder: (ctx, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(

@@ -14,6 +14,10 @@ class AppwriteAuthentication extends _$AppwriteAuthentication {
     return await _account.get();
   }
 
+  Future<User> getCurrentlyLoggedInUser() {
+    return _account.get();
+  }
+
   Future<Token> registerUser({
     required String email,
     required String password,

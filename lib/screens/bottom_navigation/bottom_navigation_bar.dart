@@ -40,20 +40,7 @@ class _BottomNavigationBarCustomState
   String titleView(index) {
     switch (index) {
       case 0:
-        {
-          ref
-              .watch(appwriteAuthenticationProvider.notifier)
-              .build()
-              .then((value) {
-            print(value);
-            return "Welcome${value.name}";
-          }).catchError((err) {
-            return "Error";
-          });
-          print("ran here");
-          return "";
-        }
-
+        return "Welcome ${ref.watch(appwriteAuthenticationProvider).value?.name}";
       case 1:
         return "Notifications";
       case 2:
@@ -65,7 +52,7 @@ class _BottomNavigationBarCustomState
     }
   }
 
-  void logout() {
+  void logout(BuildContext context) {
     ref
         .read(appwriteAuthenticationProvider.notifier)
         .logoutUser()
@@ -89,7 +76,9 @@ class _BottomNavigationBarCustomState
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
-            onPressed: logout,
+            onPressed: () {
+              logout(context);
+            },
           ),
         ],
       ),
