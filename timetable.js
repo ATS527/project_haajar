@@ -1,257 +1,246 @@
 var facultiesWithSubjects = {
     "Syama S R": {
-        "subjects": ["LSD", "Seminar", "Remedial"],
+        "subjects": ["LSD_CS", "LSD_AI", "Seminar", "Remedial", "MINOR_CS"],
         "hours": 16
     },
     "Suma L S": {
-        "subjects": ["Compiler Lab/Project", "CN", "OOPS Lab"],
-        "hours": 16
+        "subjects": ["Compiler Lab/Project", "ProjectA", "CN", "OOPS/DS Lab_AI"],
+        "hours": 12
     },
     "Leena Silvoster": {
-        "subjects": ["ML/Web", "SS", "MP", "DS Lab"],
+        "subjects": ["ML/Web", "SS", "OOPS/DS Lab_CS"],
         "hours": 16
     },
     "Remya R S": {
-        "subjects": ["Compiler Lab/Project", "Seminar", "Flat"],
-        "hours": 16
+        "subjects": ["Compiler Lab/Project", "ProjectA", "Seminar", "Flat"],
+        "hours": 14
 
     },
     "Meenu Mohan": {
-        "subjects": ["Web", "Compiler Lab/Project", "SS and MP Lab/DBMS Lab"],
+        "subjects": ["ML/Web", "Compiler Lab/Project", "SS and MP Lab/DBMS Lab"],
         "hours": 16
-
     },
     "Arya Murali": {
-        "subjects": ["MSW", "SS and MP Lab/DBMS Lab", "OOPS", "OOPS Lab"],
+        "subjects": ["MSW", "SS and MP Lab/DBMS Lab", "OOPS_CS", "OOPS/DS Lab_CS"],
         "hours": 16
-
     },
     "Vani R": {
         "subjects": ["Disaster"],
         "hours": 2
     },
     "Mechanical Guest": {
-        "subjects": ["DE"],
+        "subjects": ["DE_AI"],
         "hours": 2
     },
     "Laxmi Kant": {
-        "subjects": ["ISE", "SE"],
-        "hours": 5
+        "subjects": ["ISE", "SE_AI", "SE_CS"],
+        "hours": 7
     },
     "Dancy Kurian": {
-        "subjects": ["DS", "DS Lab", "Remedial"],
+        "subjects": ["DS_CS", "DS_AI", "OOPS/DS Lab_AI", "OOPS/DS Lab_CS", "MINOR_AI"],
         "hours": 16
     },
     "Shijina J Salim": {
-        "subjects": ["AI", "MP", "SS and MP Lab/DBMS Lab", "SS", "OOPS Lab"],
+        "subjects": ["AI", "MP", "SS and MP Lab/DBMS Lab", "OOPS/DS Lab_CS"],
         "hours": 16
-
     },
     "Shaima Rahim": {
-        "subjects": ["SS and MP Lab/DBMS Lab", "DE", "LSD", "OOPS Lab", "OOPS"],
+        "subjects": ["SS and MP Lab/DBMS Lab", "DE_CS", "OOPS/DS Lab_AI", "OOPS_AI"],
         "hours": 16
-
     },
     "Rasmiya": {
-        "subjects": ["Compiler Lab/Project", "Seminar", "DS Lab", "DS", "Compiler Lab/Project"],
-        "hours": 16
-
+        "subjects": ["Compiler Lab/Project", "Seminar", "OOPS/DS Lab_AI", "ProjectA"],
+        "hours": 14
     },
     "Neethu R Nair": {
         "subjects": ["OE"],
-        "hours": 3
-
+        "hours": 4
     },
     "Manoj S": {
-        "subjects": ["DM"],
+        "subjects": ["DM_AI", "DM_CS"],
         "hours": 8
     }
 };
 
 var subjectsWithHoursInWeek = {
-    "LSD": 4,
-    "Seminar": 3,
-    "Project": 3,
-    "ProjectA": 3,  //additional standalone hour
+    "LSD_AI": 4,
+    "LSD_CS": 4,
+    // "Seminar": 3,
+    // "Compiler Lab/Project": 6,
+    // "ProjectA": 3,  //additional standalone hour
     "CN": 5,
-    "OOPS Lab": 3,
-    "ML": 3,
+    // "OOPS/DS Lab_CS": 3,
+    // "OOPS/DS Lab_AI": 3,
     "SS": 5,
     "MP": 4,
-    "DS Lab": 3,
     "Flat": 5,
-    "Web": 3,
-    "Compiler Lab": 3,
+    "ML/Web": 4,
     "MSW": 3,
-    "OOPS": 4,
+    "OOPS_AI": 5,
+    "OOPS_CS": 5,
     "Disaster": 2,
-    "DM": 4,
-    "DE": 2,
-    "ISE": 3,
-    "SE": 2,
-    "DS": 4,
+    "DM_AI": 4,
+    "DM_CS": 4,
+    "DE_AI": 2,
+    "DE_CS": 2,
+    "ISE": 4,
+    "SE_AI": 2,
+    "SE_CS": 2,
+    "DS_AI": 4,
+    "DS_CS": 4,
     "AI": 4,
-    "SS and MP Lab/DBMS Lab": 6,
-    "OE": 3
+    // "SS and MP Lab/DBMS Lab": 6,
+    "OE": 4,
+    "MINOR_AI": 4,
+    "MINOR_CS": 4
 };
 
+var s7Subjects = ["ML/Web", "ISE", "AI", "OE"];
+var s5Subjects = ["CN", "SS", "MSW", "Disaster", "Flat", "MP"];
+var s3AISubjects = ["OOPS_AI", "SE_AI", "LSD_AI", "DE_AI", "DM_AI", "DS_AI", "MINOR_AI"];
+var s3CSSubjects = ["OOPS_CS", "SE_CS", "LSD_CS", "DE_CS", "DM_CS", "DS_CS", "MINOR_CS"];
 
-var timeTableForS7 = [
+
+var timeTable = [
     {
         "day": "Monday",
-        "subjects": []
+        "subjectsS7": ["subject", "subject", "subject", "subject", "Project", "Project"],
+        "subjectsS5": ["subject", "subject", "subject", "subject", "subject", "subject"],
+        "subjectsS3CS": ["subject", "subject", "subject", "OOPS/DS Lab_CS", "OOPS/DS Lab_CS", "OOPS/DS Lab_CS"],
+        "subjectsS3AI": ["subject", "subject", "subject", "subject", "subject", "subject"],
     },
     {
         "day": "Tuesday",
-        "subjects": []
+        "subjectsS7": ["Compiler Lab/Project", "Compiler Lab/Project", "Compiler Lab/Project", "subject", "subject", "subject"],
+        "subjectsS5": ["subject", "subject", "subject", "subject", "subject", "subject"],
+        "subjectsS3CS": ["subject", "subject", "subject", "subject", "subject", "subject"],
+        "subjectsS3AI": ["subject", "subject", "subject", "OOPS/DS Lab_AI", "OOPS/DS Lab_AI", "OOPS/DS Lab_AI"],
     },
     {
         "day": "Wednesday",
-        "subjects": []
+        "subjectsS7": ["subject", "subject", "subject", "Seminar", "Seminar", "Seminar"],
+        "subjectsS5": ["subject", "subject", "subject", "SS and MP Lab/DBMS Lab", "SS and MP Lab/DBMS Lab", "SS and MP Lab/DBMS Lab"],
+        "subjectsS3CS": ["OOPS/DS Lab_CS", "OOPS/DS Lab_CS", "OOPS/DS Lab_CS", "subject", "subject", "subject"],
+        "subjectsS3AI": ["subject", "subject", "subject", "subject", "subject", "subject"],
     },
     {
         "day": "Thursday",
-        "subjects": []
+        "subjectsS7": ["subject", "subject", "subject", "Compiler Lab/Project", "Compiler Lab/Project", "Compiler Lab/Project"],
+        "subjectsS5": ["subject", "subject", "subject", "subject", "subject", "subject"],
+        "subjectsS3CS": ["subject", "subject", "subject", "subject", "subject", "subject"],
+        "subjectsS3AI": ["OOPS/DS Lab_AI", "OOPS/DS Lab_AI", "OOPS/DS Lab_AI", "subject", "subject", "subject"],
     },
     {
         "day": "Friday",
-        "subjects": []
+        "subjectsS7": ["subject", "subject", "subject", "Project", "Project", "Project"],
+        "subjectsS5": ["SS and MP Lab/DBMS Lab", "SS and MP Lab/DBMS Lab", "SS and MP Lab/DBMS Lab", "subject", "subject", "subject"],
+        "subjectsS3CS": ["subject", "subject", "subject", "subject", "subject", "subject"],
+        "subjectsS3AI": ["subject", "subject", "subject", "subject", "subject", "subject"],
     }
 ];
 
-var s7Subjects = ["ML/Web", "ISE", "AI", "OE", "Compiler Lab/Project", "ProjectA", "Seminar"];
+var coolDownFaculties = [];
 
-var timeTableForS5 = [
-    {
-        "day": "Monday",
-        "subjects": []
-    },
-    {
-        "day": "Tuesday",
-        "subjects": []
-    },
-    {
-        "day": "Wednesday",
-        "subjects": []
-    },
-    {
-        "day": "Thursday",
-        "subjects": []
-    },
-    {
-        "day": "Friday",
-        "subjects": []
-    }
-];
-
-var s5Subjects = ["CN", "SS", "MSW", "Disaster", "Flat", "MP", "SS and MP Lab/DBMS Lab"];
-
-var day = 0;
-while (day <= 4) {
-    while (timeTableForS5[day]["subjects"].length < 6 && s5Subjects.length != 0) {
-        var subject = selectSubject(timeTableForS5[day]["subjects"].length, timeTableForS5[day]["subjects"][timeTableForS5[day]["subjects"].length - 1]);
-        if (isLab(subject)) {
-            if (timeTableForS5[day]["subjects"].length < 5) {
-                timeTableForS5[day]["subjects"].push(subject);
-                timeTableForS5[day]["subjects"].push(subject);
-                timeTableForS5[day]["subjects"].push(subject);
-                decrementHour(subject);
+for (var day of timeTable) {
+    for (var i = 0; i < day.subjectsS7.length; i++) {
+        if (day.subjectsS7[i] == "subject" && s7Subjects.length > 0) {
+            var subject;
+            if (i == 0) {
+                subject = getRandomSubject(s7Subjects, "");
+            } else {
+                subject = getRandomSubject(s7Subjects, day.subjectsS7[i - 1]);
             }
-        } else {
-            timeTableForS5[day]["subjects"].push(subject);
-            decrementHour(subject);
+            coolDownFaculties.push(findFaculty(subject));
+            day.subjectsS7[i] = subject;
+            subjectsWithHoursInWeek[subject] -= 1;
+            if (subjectsWithHoursInWeek[subject] == 0) {
+                s7Subjects.splice(s7Subjects.indexOf(subject), 1);
+            }
+            facultiesWithSubjects[findFaculty(subject)]["hours"] -= 1;
         }
+
+        if (day.subjectsS5[i] == "subject" && s5Subjects.length > 0) {
+            var subject;
+            if (i == 0) {
+                subject = getRandomSubject(s5Subjects, "");
+            } else {
+                subject = getRandomSubject(s5Subjects, day.subjectsS5[i - 1]);
+            }
+            coolDownFaculties.push(findFaculty(subject));
+            day.subjectsS5[i] = subject;
+            subjectsWithHoursInWeek[subject] -= 1;
+            if (subjectsWithHoursInWeek[subject] == 0) {
+                s5Subjects.splice(s5Subjects.indexOf(subject), 1);
+            }
+            facultiesWithSubjects[findFaculty(subject)]["hours"] -= 1;
+        }
+
+        if (day.subjectsS3CS[i] == "subject" && s3CSSubjects.length > 0) {
+            var subject;
+            if (i == 0) {
+                subject = getRandomSubject(s3CSSubjects, "");
+            } else {
+                subject = getRandomSubject(s3CSSubjects, day.subjectsS3CS[i - 1]);
+            }
+            coolDownFaculties.push(findFaculty(subject));
+            day.subjectsS3CS[i] = subject;
+            subjectsWithHoursInWeek[subject] -= 1;
+            if (subjectsWithHoursInWeek[subject] == 0) {
+                s3CSSubjects.splice(s3CSSubjects.indexOf(subject), 1);
+            }
+            facultiesWithSubjects[findFaculty(subject)]["hours"] -= 1;
+        }
+
+        if (day.subjectsS3AI[i] == "subject" && s3AISubjects.length > 0) {
+            var subject;
+            if (i == 0) {
+                subject = getRandomSubject(s3AISubjects, "");
+            } else {
+                subject = getRandomSubject(s3AISubjects, day.subjectsS3AI[i - 1]);
+            }
+            coolDownFaculties.push(findFaculty(subject));
+            day.subjectsS3AI[i] = subject;
+            subjectsWithHoursInWeek[subject] -= 1;
+            if (subjectsWithHoursInWeek[subject] == 0) {
+                s3AISubjects.splice(s3AISubjects.indexOf(subject), 1);
+            }
+            console.log(subject);
+            facultiesWithSubjects[findFaculty(subject)]["hours"] -= 1;
+        }
+
+        coolDownFaculties = [];
     }
-    day++;
 }
 
+console.log(timeTable);
 
-
-console.log(timeTableForS5);
+console.log(subjectsWithHoursInWeek);
 
 console.log(facultiesWithSubjects);
 
-function selectSubject(timeOfDay, previousSubject) {
-    var subject = s5Subjects[Math.floor(Math.random() * s5Subjects.length)];
+function getRandomSubject(subjects, previousSubject) {
+    var randomSubject = subjects[Math.floor(Math.random() * subjects.length)];
+    var faculty = findFaculty(randomSubject);
 
-    if (isLab(subject)) {
-        if (timeOfDay == 0 || timeOfDay == 3) {
-            return subject;
-        } else {
-            return selectSubject(timeOfDay, previousSubject);
-        }
-    } else if (subject == previousSubject) {
-        return selectSubject(timeOfDay, previousSubject);
-    } else {
-        return subject;
+    if (randomSubject == previousSubject) {
+        return getRandomSubject(subjects, previousSubject);
     }
-}
 
-
-
-function decrementHour(subject) {
-    let faculty = findFaculty(subject);
-    if (isLab(subject)) {
-        facultiesWithSubjects[faculty[0]]["hours"] = facultiesWithSubjects[faculty[0]]["hours"] - 3;
-        facultiesWithSubjects[faculty[1]]["hours"] = facultiesWithSubjects[faculty[1]]["hours"] - 3;
-        facultiesWithSubjects[faculty[2]]["hours"] = facultiesWithSubjects[faculty[2]]["hours"] - 3;
-        facultiesWithSubjects[faculty[3]]["hours"] = facultiesWithSubjects[faculty[3]]["hours"] - 3;
-        subjectsWithHoursInWeek[subject] = subjectsWithHoursInWeek[subject] - 3;
-        if (subjectsWithHoursInWeek[subject] == 0) {
-            s5Subjects = s5Subjects.filter(e => e != subject);
-        }
-    } else {
-        facultiesWithSubjects[faculty[0]]["hours"] = facultiesWithSubjects[faculty[0]]["hours"] - 1;
-        subjectsWithHoursInWeek[subject] = subjectsWithHoursInWeek[subject] - 1;
-        if (subjectsWithHoursInWeek[subject] == 0) {
-            s5Subjects = s5Subjects.filter(e => e != subject);
-        }
+    if (faculty in coolDownFaculties) {
+        return getRandomSubject(subjects);
     }
+
+    return randomSubject;
 }
 
 function findFaculty(subject) {
-    let faculty = [];
+    let faculty;
 
     for (const [key, value] of Object.entries(facultiesWithSubjects)) {
         if (value["subjects"].includes(subject)) {
-            if (checkFacultyAvailability(key, subject)) {
-                faculty.push(key);
-            } else {
-                continue;
-            }
+            faculty = key;
         }
     }
 
-    if (faculty.length == 0) {
-        console.log(subject + " not allowed");
-        console.log(facultiesWithSubjects);
-    }
     return faculty;
 }
-
-function checkFacultyAvailability(faculty, subject) {
-
-    const faculty_details = facultiesWithSubjects[faculty];
-
-    if (isLab(subject)) {
-        if (faculty_details["hours"] >= 3) {
-            return true;
-        } else {
-            return false;
-        }
-    } else {
-        if (faculty_details["hours"] >= 1) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-}
-
-function isLab(subject) {
-    if (subject.indexOf("Lab") > -1) {
-        return true;
-    }
-    return false;
-}
-
