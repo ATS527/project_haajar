@@ -1,20 +1,19 @@
 var facultiesWithSubjects = {
     "Syama S R": {
-        "subjects": ["LSD_CS", "LSD_AI", "Seminar", "Remedial", "MINOR_CS"],
-        "hours": 16
+        "subjects": ["LSD_CS", "LSD_AI", "Seminar"],
+        "hours": 13
     },
     "Suma L S": {
-        "subjects": ["Compiler Lab/Project", "ProjectA", "CN", "OOPS/DS Lab_AI"],
-        "hours": 12
+        "subjects": ["Compiler Lab/Project", "Project", "CN", "MINOR_CS"],
+        "hours": 5
     },
     "Leena Silvoster": {
         "subjects": ["ML/Web", "SS", "OOPS/DS Lab_CS"],
-        "hours": 16
+        "hours": 10
     },
     "Remya R S": {
-        "subjects": ["Compiler Lab/Project", "ProjectA", "Seminar", "Flat"],
+        "subjects": ["Compiler Lab/Project", "Project", "Seminar", "Flat"],
         "hours": 14
-
     },
     "Meenu Mohan": {
         "subjects": ["ML/Web", "Compiler Lab/Project", "SS and MP Lab/DBMS Lab"],
@@ -41,7 +40,7 @@ var facultiesWithSubjects = {
         "hours": 16
     },
     "Shijina J Salim": {
-        "subjects": ["AI", "MP", "SS and MP Lab/DBMS Lab", "OOPS/DS Lab_CS"],
+        "subjects": ["AI", "MP", "SS and MP Lab/DBMS Lab", "OOPS/DS Lab_CS", "MINOR_AI"],
         "hours": 16
     },
     "Shaima Rahim": {
@@ -65,19 +64,14 @@ var facultiesWithSubjects = {
 var subjectsWithHoursInWeek = {
     "LSD_AI": 4,
     "LSD_CS": 4,
-    // "Seminar": 3,
-    // "Compiler Lab/Project": 6,
-    // "ProjectA": 3,  //additional standalone hour
-    "CN": 5,
-    // "OOPS/DS Lab_CS": 3,
-    // "OOPS/DS Lab_AI": 3,
-    "SS": 5,
+    "CN": 4,
+    "SS": 4,
     "MP": 4,
     "Flat": 5,
     "ML/Web": 4,
-    "MSW": 3,
-    "OOPS_AI": 5,
-    "OOPS_CS": 5,
+    "MSW": 4,
+    "OOPS_AI": 4,
+    "OOPS_CS": 4,
     "Disaster": 2,
     "DM_AI": 4,
     "DM_CS": 4,
@@ -89,16 +83,13 @@ var subjectsWithHoursInWeek = {
     "DS_AI": 4,
     "DS_CS": 4,
     "AI": 4,
-    // "SS and MP Lab/DBMS Lab": 6,
     "OE": 4,
-    "MINOR_AI": 4,
-    "MINOR_CS": 4
 };
 
 var s7Subjects = ["ML/Web", "ISE", "AI", "OE"];
 var s5Subjects = ["CN", "SS", "MSW", "Disaster", "Flat", "MP"];
-var s3AISubjects = ["OOPS_AI", "SE_AI", "LSD_AI", "DE_AI", "DM_AI", "DS_AI", "MINOR_AI"];
-var s3CSSubjects = ["OOPS_CS", "SE_CS", "LSD_CS", "DE_CS", "DM_CS", "DS_CS", "MINOR_CS"];
+var s3AISubjects = ["OOPS_AI", "SE_AI", "LSD_AI", "DE_AI", "DM_AI", "DS_AI"];
+var s3CSSubjects = ["OOPS_CS", "SE_CS", "LSD_CS", "DE_CS", "DM_CS", "DS_CS"];
 
 
 var timeTable = [
@@ -120,22 +111,22 @@ var timeTable = [
         "day": "Wednesday",
         "subjectsS7": ["subject", "subject", "subject", "Seminar", "Seminar", "Seminar"],
         "subjectsS5": ["subject", "subject", "subject", "SS and MP Lab/DBMS Lab", "SS and MP Lab/DBMS Lab", "SS and MP Lab/DBMS Lab"],
-        "subjectsS3CS": ["OOPS/DS Lab_CS", "OOPS/DS Lab_CS", "OOPS/DS Lab_CS", "subject", "subject", "subject"],
-        "subjectsS3AI": ["subject", "subject", "subject", "subject", "subject", "subject"],
+        "subjectsS3CS": ["OOPS/DS Lab_CS", "OOPS/DS Lab_CS", "OOPS/DS Lab_CS", "subject", "subject", "MINOR_CS"],
+        "subjectsS3AI": ["subject", "subject", "subject", "subject", "subject", "MINOR_AI"],
     },
     {
         "day": "Thursday",
         "subjectsS7": ["subject", "subject", "subject", "Compiler Lab/Project", "Compiler Lab/Project", "Compiler Lab/Project"],
         "subjectsS5": ["subject", "subject", "subject", "subject", "subject", "subject"],
-        "subjectsS3CS": ["subject", "subject", "subject", "subject", "subject", "subject"],
-        "subjectsS3AI": ["OOPS/DS Lab_AI", "OOPS/DS Lab_AI", "OOPS/DS Lab_AI", "subject", "subject", "subject"],
+        "subjectsS3CS": ["subject", "subject", "subject", "subject", "subject", "MINOR_CS"],
+        "subjectsS3AI": ["OOPS/DS Lab_AI", "OOPS/DS Lab_AI", "OOPS/DS Lab_AI", "subject", "subject", "MINOR_AI"],
     },
     {
         "day": "Friday",
         "subjectsS7": ["subject", "subject", "subject", "Project", "Project", "Project"],
         "subjectsS5": ["SS and MP Lab/DBMS Lab", "SS and MP Lab/DBMS Lab", "SS and MP Lab/DBMS Lab", "subject", "subject", "subject"],
-        "subjectsS3CS": ["subject", "subject", "subject", "subject", "subject", "subject"],
-        "subjectsS3AI": ["subject", "subject", "subject", "subject", "subject", "subject"],
+        "subjectsS3CS": ["MINOR_CS", "subject", "subject", "subject", "subject", "MINOR_CS"],
+        "subjectsS3AI": ["MINOR_AI", "subject", "subject", "subject", "subject", "MINOR_AI"],
     }
 ];
 
@@ -204,10 +195,8 @@ for (var day of timeTable) {
             if (subjectsWithHoursInWeek[subject] == 0) {
                 s3AISubjects.splice(s3AISubjects.indexOf(subject), 1);
             }
-            console.log(subject);
             facultiesWithSubjects[findFaculty(subject)]["hours"] -= 1;
         }
-
         coolDownFaculties = [];
     }
 }
@@ -223,6 +212,9 @@ function getRandomSubject(subjects, previousSubject) {
     var faculty = findFaculty(randomSubject);
 
     if (randomSubject == previousSubject) {
+        if (subjects.length == 1) {
+            return randomSubject;
+        }
         return getRandomSubject(subjects, previousSubject);
     }
 
