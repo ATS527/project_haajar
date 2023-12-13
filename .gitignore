@@ -47,4 +47,4 @@ app.*.map.json
 *.env
 
 #riverpod generated files
-*.g.dart
+**/*.g.dart

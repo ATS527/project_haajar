@@ -19,11 +19,12 @@ class BottomNavigationBarCustom extends ConsumerStatefulWidget {
 class _BottomNavigationBarCustomState
     extends ConsumerState<BottomNavigationBarCustom> {
   int _selectedIndex = 0;
+  bool _isLoading = false;
 
   Widget bottomNavigationView(index) {
     switch (index) {
       case 0:
-        return const DashboardView();
+        return DashboardView();
       case 1:
         return const NotificationsView();
       case 2:
@@ -53,11 +54,16 @@ class _BottomNavigationBarCustomState
   }
 
   void logout(BuildContext context) {
+    setState(() {
+      _isLoading = true;
+    });
     ref
         .read(appwriteAuthenticationProvider.notifier)
         .logoutUser()
         .then((value) {
-      context.go(AppRouteConstants.splashScreen);
+      setState(() {
+        context.pushReplacement(AppRouteConstants.splashScreen);
+      });
     }).catchError((err) {
       context.go(AppRouteConstants.splashScreen);
     });
@@ -82,7 +88,11 @@ class _BottomNavigationBarCustomState
           ),
         ],
       ),
-      body: bottomNavigationView(_selectedIndex),
+      body: !_isLoading
+          ? bottomNavigationView(_selectedIndex)
+          : const Center(
+              child: CircularProgressIndicator(),
+            ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) {
           setState(() {

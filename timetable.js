@@ -139,10 +139,14 @@ for (var day of timeTable) {
             if (i == 0) {
                 subject = getRandomSubject(s7Subjects, "");
             } else {
-                subject = getRandomSubject(s7Subjects, day.subjectsS7[i - 1]);
+                subject = getRandomSubject(s7Subjects, day.subjectsS7[i - 1]["subject"]);
             }
-            coolDownFaculties.push(findFaculty(subject));
-            day.subjectsS7[i] = subject;
+            var faculty = findFaculty(subject)
+            coolDownFaculties.push(faculty);
+            day.subjectsS7[i] = {
+                "subject": subject,
+                "faculty": faculty
+            };
             subjectsWithHoursInWeek[subject] -= 1;
             if (subjectsWithHoursInWeek[subject] == 0) {
                 s7Subjects.splice(s7Subjects.indexOf(subject), 1);
@@ -155,10 +159,14 @@ for (var day of timeTable) {
             if (i == 0) {
                 subject = getRandomSubject(s5Subjects, "");
             } else {
-                subject = getRandomSubject(s5Subjects, day.subjectsS5[i - 1]);
+                subject = getRandomSubject(s5Subjects, day.subjectsS5[i - 1]["subject"]);
             }
-            coolDownFaculties.push(findFaculty(subject));
-            day.subjectsS5[i] = subject;
+            var faculty = findFaculty(subject)
+            coolDownFaculties.push(faculty);
+            day.subjectsS5[i] = {
+                "subject": subject,
+                "faculty": faculty
+            };
             subjectsWithHoursInWeek[subject] -= 1;
             if (subjectsWithHoursInWeek[subject] == 0) {
                 s5Subjects.splice(s5Subjects.indexOf(subject), 1);
@@ -171,10 +179,14 @@ for (var day of timeTable) {
             if (i == 0) {
                 subject = getRandomSubject(s3CSSubjects, "");
             } else {
-                subject = getRandomSubject(s3CSSubjects, day.subjectsS3CS[i - 1]);
+                subject = getRandomSubject(s3CSSubjects, day.subjectsS3CS[i - 1]["subject"]);
             }
-            coolDownFaculties.push(findFaculty(subject));
-            day.subjectsS3CS[i] = subject;
+            var faculty = findFaculty(subject)
+            coolDownFaculties.push(faculty);
+            day.subjectsS3CS[i] = {
+                "subject": subject,
+                "faculty": faculty
+            };
             subjectsWithHoursInWeek[subject] -= 1;
             if (subjectsWithHoursInWeek[subject] == 0) {
                 s3CSSubjects.splice(s3CSSubjects.indexOf(subject), 1);
@@ -187,10 +199,14 @@ for (var day of timeTable) {
             if (i == 0) {
                 subject = getRandomSubject(s3AISubjects, "");
             } else {
-                subject = getRandomSubject(s3AISubjects, day.subjectsS3AI[i - 1]);
+                subject = getRandomSubject(s3AISubjects, day.subjectsS3AI[i - 1]["subject"]);
             }
-            coolDownFaculties.push(findFaculty(subject));
-            day.subjectsS3AI[i] = subject;
+            var faculty = findFaculty(subject)
+            coolDownFaculties.push(faculty);
+            day.subjectsS3AI[i] = {
+                "subject": subject,
+                "faculty": faculty
+            };
             subjectsWithHoursInWeek[subject] -= 1;
             if (subjectsWithHoursInWeek[subject] == 0) {
                 s3AISubjects.splice(s3AISubjects.indexOf(subject), 1);
@@ -201,17 +217,17 @@ for (var day of timeTable) {
     }
 }
 
-console.log(timeTable);
+for (var i of timeTable) {
+    console.log(i);
+}
 
 console.log(subjectsWithHoursInWeek);
-
-console.log(facultiesWithSubjects);
 
 function getRandomSubject(subjects, previousSubject) {
     var randomSubject = subjects[Math.floor(Math.random() * subjects.length)];
     var faculty = findFaculty(randomSubject);
 
-    if (randomSubject == previousSubject) {
+    if (randomSubject === previousSubject) {
         if (subjects.length == 1) {
             return randomSubject;
         }

@@ -5,7 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'appwrite_authentication_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class AppwriteAuthentication extends _$AppwriteAuthentication {
   late final Account _account;
   @override
@@ -22,6 +22,7 @@ class AppwriteAuthentication extends _$AppwriteAuthentication {
     required String email,
     required String password,
     required String name,
+    required String role,
   }) async {
     await _account.create(
       userId: ID.unique(),
