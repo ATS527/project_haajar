@@ -169,12 +169,258 @@ class TimeTableLogic extends _$TimeTableLogic {
     "DS_CS"
   ];
 
-  List<TimeTable> timeTableS7 = [TimeTable(day: "Monday", subjects: [
-    SubjectWithFaculty(subject: "subject", faculty: "nill"),
-    SubjectWithFaculty(subject: "subject", faculty: "nill"),
-    SubjectWithFaculty(subject: "subject", faculty: "nill"),
-    SubjectWithFaculty(subject: "Project", faculty: )
-  ])];
+  List<TimeTable> timeTableS7 = [
+    TimeTable(
+      day: "Monday",
+      subjects: [
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "Project", faculty: "Suma L S,Remya R S"),
+        SubjectWithFaculty(subject: "Project", faculty: "Suma L S,Remya R S"),
+        SubjectWithFaculty(subject: "Project", faculty: "Suma L S,Remya R S"),
+      ],
+    ),
+    TimeTable(
+      day: "Tuesday",
+      subjects: [
+        SubjectWithFaculty(
+            subject: "Compiler Lab/Project",
+            faculty: "Meenu Mohan,Rasmiya/Suma L S,Remya R S"),
+        SubjectWithFaculty(
+            subject: "Compiler Lab/Project",
+            faculty: "Meenu Mohan,Rasmiya/Suma L S,Remya R S"),
+        SubjectWithFaculty(
+            subject: "Compiler Lab/Project",
+            faculty: "Meenu Mohan,Rasmiya/Suma L S,Remya R S"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+      ],
+    ),
+    TimeTable(
+      day: "Wednesday",
+      subjects: [
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(
+            subject: "Seminar", faculty: "Remya R S,Syama S R,Rasmiya"),
+        SubjectWithFaculty(
+            subject: "Seminar", faculty: "Remya R S,Syama S R,Rasmiya"),
+        SubjectWithFaculty(
+            subject: "Seminar", faculty: "Remya R S,Syama S R,Rasmiya"),
+      ],
+    ),
+    TimeTable(
+      day: "Thursday",
+      subjects: [
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(
+            subject: "Compiler Lab/Project",
+            faculty: "Meenu Mohan,Rasmiya/Suma L S,Remya R S"),
+        SubjectWithFaculty(
+            subject: "Compiler Lab/Project",
+            faculty: "Meenu Mohan,Rasmiya/Suma L S,Remya R S"),
+        SubjectWithFaculty(
+            subject: "Compiler Lab/Project",
+            faculty: "Meenu Mohan,Rasmiya/Suma L S,Remya R S"),
+      ],
+    ),
+    TimeTable(
+      day: "Friday",
+      subjects: [
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "Project", faculty: "Suma L S,Remya R S"),
+        SubjectWithFaculty(subject: "Project", faculty: "Suma L S,Remya R S"),
+        SubjectWithFaculty(subject: "Project", faculty: "Suma L S,Remya R S"),
+      ],
+    ),
+  ];
+
+  List<TimeTable> timeTableS5 = [
+    TimeTable(
+      day: "Monday",
+      subjects: [
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+      ],
+    ),
+    TimeTable(
+      day: "Tuesday",
+      subjects: [
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+      ],
+    ),
+    TimeTable(
+      day: "Wednesday",
+      subjects: [
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(
+            subject: "SS and MP Lab/DBMS Lab",
+            faculty: "Shijina J Salim,Shaima Rahim/Arya Murali,Meenu Mohan"),
+        SubjectWithFaculty(
+            subject: "SS and MP Lab/DBMS Lab",
+            faculty: "Shijina J Salim,Shaima Rahim/Arya Murali,Meenu Mohan"),
+        SubjectWithFaculty(
+            subject: "SS and MP Lab/DBMS Lab",
+            faculty: "Shijina J Salim,Shaima Rahim/Arya Murali,Meenu Mohan"),
+      ],
+    ),
+    TimeTable(
+      day: "Thursday",
+      subjects: [
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+      ],
+    ),
+    TimeTable(
+      day: "Friday",
+      subjects: [
+        SubjectWithFaculty(
+            subject: "SS and MP Lab/DBMS Lab",
+            faculty: "Shijina J Salim,Shaima Rahim/Arya Murali,Meenu Mohan"),
+        SubjectWithFaculty(
+            subject: "SS and MP Lab/DBMS Lab",
+            faculty: "Shijina J Salim,Shaima Rahim/Arya Murali,Meenu Mohan"),
+        SubjectWithFaculty(
+            subject: "SS and MP Lab/DBMS Lab",
+            faculty: "Shijina J Salim,Shaima Rahim/Arya Murali,Meenu Mohan"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+      ],
+    ),
+  ];
+
+  List<TimeTable> timeTableS3AI = [
+    TimeTable(
+      day: "Monday",
+      subjects: [
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+      ],
+    ),
+    TimeTable(
+      day: "Tuesday",
+      subjects: [
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(
+            subject: "OOPS/DS Lab_AI",
+            faculty: "Shaima Rahim,Suma L S/Dancy Kurian,Syama S R"),
+        SubjectWithFaculty(
+            subject: "OOPS/DS Lab_AI",
+            faculty: "Shaima Rahim,Suma L S/Dancy Kurian,Syama S R"),
+        SubjectWithFaculty(
+            subject: "OOPS/DS Lab_AI",
+            faculty: "Shaima Rahim,Suma L S/Dancy Kurian,Syama S R"),
+      ],
+    ),
+    TimeTable(
+      day: "Wednesday",
+      subjects: [
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "MINOR_AI", faculty: "Shijina J Salim"),
+      ],
+    ),
+    TimeTable(
+      day: "Thursday",
+      subjects: [
+        SubjectWithFaculty(
+            subject: "OOPS/DS Lab_AI",
+            faculty: "Shaima Rahim,Suma L S/Dancy Kurian,Syama S R"),
+        SubjectWithFaculty(
+            subject: "OOPS/DS Lab_AI",
+            faculty: "Shaima Rahim,Suma L S/Dancy Kurian,Syama S R"),
+        SubjectWithFaculty(
+            subject: "OOPS/DS Lab_AI",
+            faculty: "Shaima Rahim,Suma L S/Dancy Kurian,Syama S R"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "MINOR_AI", faculty: "Shijina J Salim"),
+      ],
+    ),
+    TimeTable(
+      day: "Friday",
+      subjects: [
+        SubjectWithFaculty(subject: "MINOR_AI", faculty: "Shijina J Salim"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "MINOR_AI", faculty: "Shijina J Salim"),
+      ],
+    ),
+  ];
+
+  List<TimeTable> timeTableS3CS = [
+    TimeTable(
+      day: "Monday",
+      subjects: [
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(
+            subject: "OOPS/DS Lab_CS",
+            faculty:
+                "Arya Murali,Shijina J Salim/Dancy Kurian,Leena Silvoster"),
+        SubjectWithFaculty(
+            subject: "OOPS/DS Lab_CS",
+            faculty:
+                "Arya Murali,Shijina J Salim/Dancy Kurian,Leena Silvoster"),
+        SubjectWithFaculty(
+            subject: "OOPS/DS Lab_CS",
+            faculty:
+                "Arya Murali,Shijina J Salim/Dancy Kurian,Leena Silvoster"),
+      ],
+    ),
+    TimeTable(
+      day: "Tuesday",
+      subjects: [
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+        SubjectWithFaculty(subject: "subject", faculty: "nill"),
+      ],
+    ),
+    TimeTable(day: "Wednesday", subjects: [
+      SubjectWithFaculty(subject: "subject", faculty: "nill"),
+      SubjectWithFaculty(subject: "subject", faculty: "nill"),
+      SubjectWithFaculty(subject: "subject", faculty: "nill"),
+      
+    ]),
+  ];
 
   List<Map<String, dynamic>> _timeTable = [
     {
@@ -418,121 +664,4 @@ class TimeTableLogic extends _$TimeTableLogic {
   ];
 
   List<String> _coolDownFaculties = [];
-
-  List generateTimeTable() {
-    for (var day in _timeTable) {
-      for (int i = 0; i < day['subjectsS7'].length; i++) {
-        if (day["subjectsS7"][i] == "subject" && _s7Subjects.isNotEmpty) {
-          String subject;
-          if (i == 0) {
-            subject = _getRandomSubject(_s7Subjects, "");
-          } else {
-            subject = _getRandomSubject(
-                _s7Subjects, day["subjectsS7"][i - 1]["subject"]);
-          }
-          String faculty = _findFaculty(subject);
-          _coolDownFaculties.add(faculty);
-          day["subjectsS7"][i] = {"subject": subject, "faculty": faculty};
-          _subjectsWithHoursInWeek[subject] =
-              _subjectsWithHoursInWeek[subject]! - 1;
-          if (_subjectsWithHoursInWeek[subject] == 0) {
-            _s7Subjects.remove(subject);
-          }
-          _facultiesWithSubjects[_findFaculty(subject)]!["hours"] -= 1;
-        }
-
-        if (day["subjectsS5"][i] == "subject" && _s5Subjects.isNotEmpty) {
-          String subject;
-          if (i == 0) {
-            subject = _getRandomSubject(_s5Subjects, "");
-          } else {
-            subject = _getRandomSubject(
-                _s5Subjects, day["subjectsS5"][i - 1]["subject"]);
-          }
-          String faculty = _findFaculty(subject);
-          _coolDownFaculties.add(faculty);
-          day["subjectsS5"][i] = {"subject": subject, "faculty": faculty};
-          _subjectsWithHoursInWeek[subject] =
-              _subjectsWithHoursInWeek[subject]! - 1;
-          if (_subjectsWithHoursInWeek[subject] == 0) {
-            _s5Subjects.remove(subject);
-          }
-          _facultiesWithSubjects[_findFaculty(subject)]!["hours"] -= 1;
-        }
-
-        if (day["subjectsS3CS"][i] == "subject" && _s3CSSubjects.isNotEmpty) {
-          String subject;
-          if (i == 0) {
-            subject = _getRandomSubject(_s3CSSubjects, "");
-          } else {
-            subject = _getRandomSubject(
-                _s3CSSubjects, day["subjectsS3CS"][i - 1]["subject"]);
-          }
-          String faculty = _findFaculty(subject);
-          _coolDownFaculties.add(faculty);
-          day["subjectsS3CS"][i] = {"subject": subject, "faculty": faculty};
-          _subjectsWithHoursInWeek[subject] =
-              _subjectsWithHoursInWeek[subject]! - 1;
-          if (_subjectsWithHoursInWeek[subject] == 0) {
-            _s5Subjects.remove(subject);
-          }
-          _facultiesWithSubjects[_findFaculty(subject)]!["hours"] -= 1;
-        }
-
-        if (day["subjectsS3AI"][i] == "subject" && _s3AISubjects.isNotEmpty) {
-          String subject;
-          if (i == 0) {
-            subject = _getRandomSubject(_s3AISubjects, "");
-          } else {
-            subject = _getRandomSubject(
-                _s3AISubjects, day["subjectsS3AI"][i - 1]["subject"]);
-          }
-          String faculty = _findFaculty(subject);
-          _coolDownFaculties.add(faculty);
-          day["subjectsS3AI"][i] = {"subject": subject, "faculty": faculty};
-          _subjectsWithHoursInWeek[subject] =
-              _subjectsWithHoursInWeek[subject]! - 1;
-          if (_subjectsWithHoursInWeek[subject] == 0) {
-            _s7Subjects.remove(subject);
-          }
-          _facultiesWithSubjects[_findFaculty(subject)]!["hours"] -= 1;
-        }
-        _coolDownFaculties = [];
-      }
-    }
-
-    return _timeTable;
-  }
-
-  String _getRandomSubject(subjects, previousSubject) {
-    final randomNumber = Random();
-    int i = randomNumber.nextInt(subjects.length);
-    var randomSubject = subjects[i];
-    var faculty = _findFaculty(randomSubject);
-
-    if (randomSubject == previousSubject) {
-      if (subjects.length == 1) {
-        return randomSubject;
-      }
-      return _getRandomSubject(subjects, previousSubject);
-    }
-
-    if (_coolDownFaculties.contains(faculty)) {
-      return _getRandomSubject(subjects, previousSubject);
-    }
-
-    return randomSubject;
-  }
-
-  String _findFaculty(subject) {
-    String faculty = "";
-
-    for (final entry in _facultiesWithSubjects.entries) {
-      if (entry.value["subjects"].contains(subject)) {
-        faculty = entry.key;
-      }
-    }
-
-    return faculty;
-  }
 }
