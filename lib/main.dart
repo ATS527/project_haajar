@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       routerConfig: CustomRouter.routerFunction(),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 69, 189, 157),
+          seedColor: Color.fromARGB(255, 142, 174, 165),
         ),
       ),
     );

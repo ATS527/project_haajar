@@ -72,7 +72,7 @@ class _BottomNavigationBarCustomState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.teal,
+      backgroundColor: Theme.of(context).primaryColorLight,
       appBar: AppBar(
         title: Text(
           titleView(_selectedIndex),

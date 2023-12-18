@@ -252,3 +252,256 @@ function findFaculty(subject) {
 
     return faculty;
 }
+
+
+
+
+// List<Map<String, dynamic>> timeTable = [
+//   {
+//     "day": 'Monday',
+//     "subjectsS7": [
+//       {"subject": 'OE', "faculty": 'Neethu R Nair'},
+//       {"subject": 'ISE', "faculty": 'Laxmi Kant'},
+//       {"subject": 'AI', "faculty": 'Shijina J Salim'},
+//       {"subject": 'ISE', "faculty": 'Laxmi Kant'},
+//       {"subject": "Project", "faculty": "Suma L S,Remya R S"},
+//       {"subject": "Project", "faculty": "Suma L S,Remya R S"},
+//     ],
+//     "subjectsS5": [
+//       {"subject": 'Disaster', "faculty": 'Vani R'},
+//       {"subject": 'MSW', "faculty": 'Arya Murali'},
+//       {"subject": 'Disaster', "faculty": 'Vani R'},
+//       {"subject": 'MP', "faculty": 'Shijina J Salim'},
+//       {"subject": 'SS', "faculty": 'Leena Silvoster'},
+//       {"subject": 'Flat', "faculty": 'Remya R S'}
+//     ],
+//     "subjectsS3CS": [
+//       {"subject": 'OOPS_CS', "faculty": 'Arya Murali'},
+//       {"subject": 'LSD_CS', "faculty": 'Syama S R'},
+//       {"subject": 'DM_CS', "faculty": 'Manoj S'},
+//       {
+//         "subject": "OOPS/DS Lab_CS",
+//         "faculty": "Arya Murali,Shijina J Salim/Dancy Kurian,Leena Silvoster"
+//       },
+//       {
+//         "subject": "OOPS/DS Lab_CS",
+//         "faculty": "Arya Murali,Shijina J Salim/Dancy Kurian,Leena Silvoster"
+//       },
+//       {
+//         "subject": "OOPS/DS Lab_CS",
+//         "faculty": "Arya Murali,Shijina J Salim/Dancy Kurian,Leena Silvoster"
+//       }
+//     ],
+//     "subjectsS3AI": [
+//       {"subject": 'DS_AI', "faculty": 'Dancy Kurian'},
+//       {"subject": 'LSD_AI', "faculty": 'Syama S R'},
+//       {"subject": 'OOPS_AI', "faculty": 'Shaima Rahim'},
+//       {"subject": 'DM_AI', "faculty": 'Manoj S'},
+//       {"subject": 'SE_AI', "faculty": 'Laxmi Kant'},
+//       {"subject": 'DE_AI', "faculty": 'Mechanical Guest'}
+//     ]
+//   },
+//   {
+//     "day": 'Tuesday',
+//     "subjectsS7": [
+//       {
+//         "subject": "Compiler Lab/Project",
+//         "faculty": "Meenu Mohan,Rasmiya/Suma L S,Remya R S"
+//       },
+//       {
+//         "subject": "Compiler Lab/Project",
+//         "faculty": "Meenu Mohan,Rasmiya/Suma L S,Remya R S"
+//       },
+//       {
+//         "subject": "Compiler Lab/Project",
+//         "faculty": "Meenu Mohan,Rasmiya/Suma L S,Remya R S"
+//       },
+//       {"subject": 'ML/Web', "faculty": 'Meenu Mohan'},
+//       {"subject": 'ISE', "faculty": 'Laxmi Kant'},
+//       {"subject": 'OE', "faculty": 'Neethu R Nair'}
+//     ],
+//     "subjectsS5": [
+//       {"subject": 'CN', "faculty": 'Suma L S'},
+//       {"subject": 'SS', "faculty": 'Leena Silvoster'},
+//       {"subject": 'MSW', "faculty": 'Arya Murali'},
+//       {"subject": 'CN', "faculty": 'Suma L S'},
+//       {"subject": 'SS', "faculty": 'Leena Silvoster'},
+//       {"subject": 'MP', "faculty": 'Shijina J Salim'}
+//     ],
+//     "subjectsS3CS": [
+//       {"subject": 'OOPS_CS', "faculty": 'Arya Murali'},
+//       {"subject": 'LSD_CS', "faculty": 'Syama S R'},
+//       {"subject": 'OOPS_CS', "faculty": 'Arya Murali'},
+//       {"subject": 'SE_CS', "faculty": 'Laxmi Kant'},
+//       {"subject": 'DM_CS', "faculty": 'Manoj S'},
+//       {"subject": 'LSD_CS', "faculty": 'Syama S R'}
+//     ],
+//     "subjectsS3AI": [
+//       {"subject": 'DS_AI', "faculty": 'Dancy Kurian'},
+//       {"subject": 'SE_AI', "faculty": 'Laxmi Kant'},
+//       {"subject": 'OOPS_AI', "faculty": 'Shaima Rahim'},
+//       {
+//         "subject": "OOPS/DS Lab_AI",
+//         "faculty": "Shaima Rahim,Suma L S/Dancy Kurian,Syama S R"
+//       },
+//       {
+//         "subject": "OOPS/DS Lab_AI",
+//         "faculty": "Shaima Rahim,Suma L S/Dancy Kurian,Syama S R"
+//       },
+//       {
+//         "subject": "OOPS/DS Lab_AI",
+//         "faculty": "Shaima Rahim,Suma L S/Dancy Kurian,Syama S R"
+//       },
+//     ]
+//   },
+//   {
+//     "day": 'Wednesday',
+//     "subjectsS7": [
+//       {"subject": 'OE', "faculty": 'Neethu R Nair'},
+//       {"subject": 'ML/Web', "faculty": 'Meenu Mohan'},
+//       {"subject": 'AI', "faculty": 'Shijina J Salim'},
+//       {"subject": "Seminar", "faculty": "Remya R S,Syama S R,Rasmiya"},
+//       {"subject": "Seminar", "faculty": "Remya R S,Syama S R,Rasmiya"},
+//       {"subject": "Seminar", "faculty": "Remya R S,Syama S R,Rasmiya"}
+//     ],
+//     "subjectsS5": [
+//       {"subject": 'MP', "faculty": 'Shijina J Salim'},
+//       {"subject": 'SS', "faculty": 'Leena Silvoster'},
+//       {"subject": 'MP', "faculty": 'Shijina J Salim'},
+//       {
+//         "subject": "SS and MP Lab/DBMS Lab",
+//         "faculty": "Shijina J Salim,Shaima Rahim/Arya Murali,Meenu Mohan"
+//       },
+//       {
+//         "subject": "SS and MP Lab/DBMS Lab",
+//         "faculty": "Shijina J Salim,Shaima Rahim/Arya Murali,Meenu Mohan"
+//       },
+//       {
+//         "subject": "SS and MP Lab/DBMS Lab",
+//         "faculty": "Shijina J Salim,Shaima Rahim/Arya Murali,Meenu Mohan"
+//       }
+//     ],
+//     "subjectsS3CS": [
+//       {
+//         "subject": "OOPS/DS Lab_CS",
+//         "faculty": "Arya Murali,Shijina J Salim/Dancy Kurian,Leena Silvoster"
+//       },
+//       {
+//         "subject": "OOPS/DS Lab_CS",
+//         "faculty": "Arya Murali,Shijina J Salim/Dancy Kurian,Leena Silvoster"
+//       },
+//       {
+//         "subject": "OOPS/DS Lab_CS",
+//         "faculty": "Arya Murali,Shijina J Salim/Dancy Kurian,Leena Silvoster"
+//       },
+//       {"subject": 'DM_CS', "faculty": 'Manoj S'},
+//       {"subject": 'DE_CS', "faculty": 'Shaima Rahim'},
+//       {"subject": 'MINOR_CS', "faculty": "Suma L S"}
+//     ],
+//     "subjectsS3AI": [
+//       {"subject": 'DE_AI', "faculty": 'Mechanical Guest'},
+//       {"subject": 'LSD_AI', "faculty": 'Syama S R'},
+//       {"subject": 'DM_AI', "faculty": 'Manoj S'},
+//       {"subject": 'OOPS_AI', "faculty": 'Shaima Rahim'},
+//       {"subject": 'DS_AI', "faculty": 'Dancy Kurian'},
+//       {"subject": 'MINOR_AI', "faculty": "Shijina J Salim"}
+//     ]
+//   },
+//   {
+//     "day": 'Thursday',
+//     "subjectsS7": [
+//       {"subject": 'OE', "faculty": 'Neethu R Nair'},
+//       {"subject": 'ML/Web', "faculty": 'Meenu Mohan'},
+//       {"subject": 'ISE', "faculty": 'Laxmi Kant'},
+//       {
+//         "subject": "Compiler Lab/Project",
+//         "faculty": "Meenu Mohan,Rasmiya/Suma L S,Remya R S"
+//       },
+//       {
+//         "subject": "Compiler Lab/Project",
+//         "faculty": "Meenu Mohan,Rasmiya/Suma L S,Remya R S"
+//       },
+//       {
+//         "subject": "Compiler Lab/Project",
+//         "faculty": "Meenu Mohan,Rasmiya/Suma L S,Remya R S"
+//       }
+//     ],
+//     "subjectsS5": [
+//       {"subject": 'CN', "faculty": 'Suma L S'},
+//       {"subject": 'Flat', "faculty": 'Remya R S'},
+//       {"subject": 'CN', "faculty": 'Suma L S'},
+//       {"subject": 'MSW', "faculty": 'Arya Murali'},
+//       {"subject": 'Flat', "faculty": 'Remya R S'},
+//       {"subject": 'MSW', "faculty": 'Arya Murali'}
+//     ],
+//     "subjectsS3CS": [
+//       {"subject": 'DS_CS', "faculty": 'Dancy Kurian'},
+//       {"subject": 'DE_CS', "faculty": 'Shaima Rahim'},
+//       {"subject": 'SE_CS', "faculty": 'Laxmi Kant'},
+//       {"subject": 'LSD_CS', "faculty": 'Syama S R'},
+//       {"subject": 'DM_CS', "faculty": 'Manoj S'},
+//       {"subject": 'MINOR_CS', "faculty": "Suma L S"}
+//     ],
+//     "subjectsS3AI": [
+//       {
+//         "subject": "OOPS/DS Lab_AI",
+//         "faculty": "Shaima Rahim,Suma L S/Dancy Kurian,Syama S R"
+//       },
+//       {
+//         "subject": "OOPS/DS Lab_AI",
+//         "faculty": "Shaima Rahim,Suma L S/Dancy Kurian,Syama S R"
+//       },
+//       {
+//         "subject": "OOPS/DS Lab_AI",
+//         "faculty": "Shaima Rahim,Suma L S/Dancy Kurian,Syama S R"
+//       },
+//       {"subject": 'DM_AI', "faculty": 'Manoj S'},
+//       {"subject": 'DS_AI', "faculty": 'Dancy Kurian'},
+//       {"subject": 'MINOR_AI', "faculty": "Shijina J Salim"}
+//     ]
+//   },
+//   {
+//     "day": 'Friday',
+//     "subjectsS7": [
+//       {"subject": 'AI', "faculty": 'Shijina J Salim'},
+//       {"subject": 'ML/Web', "faculty": 'Meenu Mohan'},
+//       {"subject": 'AI', "faculty": 'Shijina J Salim'},
+//       {"subject": "Project", "faculty": "Suma L S,Remya R S"},
+//       {"subject": "Project", "faculty": "Suma L S,Remya R S"},
+//       {"subject": "Project", "faculty": "Suma L S,Remya R S"},
+//     ],
+//     "subjectsS5": [
+//       {
+//         "subject": "SS and MP Lab/DBMS Lab",
+//         "faculty": "Shijina J Salim,Shaima Rahim/Arya Murali,Meenu Mohan"
+//       },
+//       {
+//         "subject": "SS and MP Lab/DBMS Lab",
+//         "faculty": "Shijina J Salim,Shaima Rahim/Arya Murali,Meenu Mohan"
+//       },
+//       {
+//         "subject": "SS and MP Lab/DBMS Lab",
+//         "faculty": "Shijina J Salim,Shaima Rahim/Arya Murali,Meenu Mohan"
+//       },
+//       {"subject": 'Flat', "faculty": 'Remya R S'},
+//       {"subject": 'Flat', "faculty": 'Remya R S'},
+//       {"subject": 'CN', "faculty": 'Suma L S'},
+//     ],
+//     "subjectsS3CS": [
+//       {"subject": 'MINOR_CS', "faculty": "Suma L S"},
+//       {"subject": 'OOPS_CS', "faculty": 'Arya Murali'},
+//       {"subject": 'DS_CS', "faculty": 'Dancy Kurian'},
+//       {"subject": 'DS_CS', "faculty": 'Dancy Kurian'},
+//       {"subject": 'DS_CS', "faculty": 'Dancy Kurian'},
+//       {"subject": 'MINOR_CS', "faculty": "Suma L S"}
+//     ],
+//     "subjectsS3AI": [
+//       {"subject": 'MINOR_AI', "faculty": "Shijina J Salim"},
+//       {"subject": 'DM_AI', "faculty": 'Manoj S'},
+//       {"subject": 'LSD_AI', "faculty": 'Syama S R'},
+//       {"subject": 'OOPS_AI', "faculty": 'Shaima Rahim'},
+//       {"subject": 'LSD_AI', "faculty": 'Syama S R'},
+//       {"subject": 'MINOR_AI', "faculty": "Shijina J Salim"}
+//     ]
+//   }
+// ];
