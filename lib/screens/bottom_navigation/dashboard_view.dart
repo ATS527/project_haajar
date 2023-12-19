@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:project_haajar/providers/time_table_logic_provider.dart';
 
-class DashboardView extends ConsumerStatefulWidget {
+class DashboardView extends StatefulWidget {
   const DashboardView({super.key});
 
   @override
-  ConsumerState<DashboardView> createState() => _DashboardViewState();
+  State<DashboardView> createState() => _DashboardViewState();
 }
 
-class _DashboardViewState extends ConsumerState<DashboardView> {
+class _DashboardViewState extends State<DashboardView> {
   Widget headerContainer(String text) {
     return Container(
       height: 100,
@@ -94,94 +92,15 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
   List timeTable = [];
 
   @override
-  void initState() {
-    setState(() {
-      timeTable = ref.read(timeTableLogicProvider.notifier).generateTimeTable();
-    });
-    super.initState();
-  }
+  // void initState() {
+  //   setState(() {
+  //     timeTable = ref.read(timeTableLogicProvider.notifier).generateTimeTable();
+  //   });
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 15,
-          ),
-          const Text(
-            "Time Table Generation",
-            style: TextStyle(fontSize: 20),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    departmentContainer("Department"),
-                    headerContainer("Monday"),
-                    headerContainer("Tuesday"),
-                    headerContainer("Wednesday"),
-                    headerContainer("Thursday"),
-                    headerContainer("Friday"),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    departmentSubContainer("S7 CS"),
-                    for (int i = 0; i < 5; i++)
-                      for (int j = 0; j < 6; j++)
-                        subjectContainer(
-                            subject: timeTable[i]["subjectsS7"][j]["subject"],
-                            faculty: timeTable[i]["subjectsS7"][j]["faculty"])
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    departmentSubContainer("S5 CS"),
-                    for (int i = 0; i < 5; i++)
-                      for (int j = 0; j < 6; j++)
-                        subjectContainer(
-                            subject: timeTable[i]["subjectsS5"][j]["subject"],
-                            faculty: timeTable[i]["subjectsS5"][j]["faculty"])
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    departmentSubContainer("S3 CS"),
-                    for (int i = 0; i < 5; i++)
-                      for (int j = 0; j < 6; j++)
-                        subjectContainer(
-                            subject: timeTable[i]["subjectsS3CS"][j]["subject"],
-                            faculty: timeTable[i]["subjectsS3CS"][j]["faculty"])
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    departmentSubContainer("S3 AI"),
-                    for (int i = 0; i < 5; i++)
-                      for (int j = 0; j < 6; j++)
-                        subjectContainer(
-                            subject: timeTable[i]["subjectsS3AI"][j]["subject"],
-                            faculty: timeTable[i]["subjectsS3AI"][j]["faculty"])
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+    return Container();
   }
 }

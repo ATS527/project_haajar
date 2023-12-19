@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:project_haajar/providers/appwrite_authentication_provider.dart';
+import 'package:project_haajar/controllers/authentication_controller.dart';
 import 'package:project_haajar/router.dart';
 
-class ForgotPasswordScreen extends ConsumerStatefulWidget {
+class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen(
       {super.key, required this.userId, required this.secret});
 
@@ -12,11 +11,10 @@ class ForgotPasswordScreen extends ConsumerStatefulWidget {
   final String secret;
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _ForgotPasswordScreenState();
+  State<StatefulWidget> createState() => _ForgotPasswordScreenState();
 }
 
-class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
@@ -29,14 +27,13 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
   }
 
   void forgotPassword() async {
-    ref
-        .read(appwriteAuthenticationProvider.notifier)
+    auth
         .confirmPasswordRecovery(
-          userId: widget.userId,
-          secret: widget.secret,
-          password: _passwordController.value.text,
-          passwordAgain: _confirmPasswordController.value.text,
-        )
+      userId: widget.userId,
+      secret: widget.secret,
+      password: _passwordController.value.text,
+      passwordAgain: _confirmPasswordController.value.text,
+    )
         .then((value) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

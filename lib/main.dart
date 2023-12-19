@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:project_haajar/controllers/authentication_controller.dart';
+import 'package:project_haajar/logs/realtime_logs.dart';
 import 'package:project_haajar/router.dart';
-import 'package:project_haajar/utils/provider_debug.dart';
 
 Future main() async {
   await dotenv.load(fileName: ".env");
+  await auth.initialiseUser();
+  realtimeLogs.subscribeRealtime();
   runApp(
-    ProviderScope(
-      observers: [
-        MyObserver(),
-      ],
-      child: const MaterialApp(
-        home: MyApp(),
-        debugShowCheckedModeBanner: false,
-      ),
+    const MaterialApp(
+      home: MyApp(),
+      debugShowCheckedModeBanner: false,
     ),
   );
 }
@@ -25,12 +22,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routerConfig: CustomRouter.routerFunction(),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Color.fromARGB(255, 142, 174, 165),
+          seedColor: const Color.fromARGB(255, 142, 174, 165),
         ),
       ),
+      routerConfig: CustomRouter.routerFunction(),
     );
   }
 }

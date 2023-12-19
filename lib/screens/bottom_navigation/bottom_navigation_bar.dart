@@ -1,30 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:project_haajar/providers/appwrite_authentication_provider.dart';
-import 'package:project_haajar/router.dart';
+import 'package:project_haajar/controllers/authentication_controller.dart';
 import 'package:project_haajar/screens/bottom_navigation/assignments_view.dart';
 import 'package:project_haajar/screens/bottom_navigation/dashboard_view.dart';
 import 'package:project_haajar/screens/bottom_navigation/notifications_view.dart';
 import 'package:project_haajar/screens/bottom_navigation/settings_view.dart';
 
-class BottomNavigationBarCustom extends ConsumerStatefulWidget {
+class BottomNavigationBarCustom extends StatefulWidget {
   const BottomNavigationBarCustom({super.key});
 
   @override
-  ConsumerState<BottomNavigationBarCustom> createState() =>
+  State<BottomNavigationBarCustom> createState() =>
       _BottomNavigationBarCustomState();
 }
 
-class _BottomNavigationBarCustomState
-    extends ConsumerState<BottomNavigationBarCustom> {
+class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
   int _selectedIndex = 0;
   bool _isLoading = false;
 
   Widget bottomNavigationView(index) {
     switch (index) {
       case 0:
-        return DashboardView();
+        return const DashboardView();
       case 1:
         return const NotificationsView();
       case 2:
@@ -41,7 +37,7 @@ class _BottomNavigationBarCustomState
   String titleView(index) {
     switch (index) {
       case 0:
-        return "Welcome ${ref.watch(appwriteAuthenticationProvider).value?.name}";
+        return "Welcome ${auth.currentUserName.value}";
       case 1:
         return "Notifications";
       case 2:
@@ -53,19 +49,16 @@ class _BottomNavigationBarCustomState
     }
   }
 
-  void logout(BuildContext context) {
+  void logout() async {
     setState(() {
       _isLoading = true;
     });
-    ref
-        .read(appwriteAuthenticationProvider.notifier)
-        .logoutUser()
-        .then((value) {
-      setState(() {
-        context.pushReplacement(AppRouteConstants.splashScreen);
-      });
-    }).catchError((err) {
-      context.go(AppRouteConstants.splashScreen);
+    await auth.logoutUser().catchError((err) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(err.toString()),
+        ),
+      );
     });
   }
 
@@ -83,7 +76,7 @@ class _BottomNavigationBarCustomState
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () {
-              logout(context);
+              logout();
             },
           ),
         ],

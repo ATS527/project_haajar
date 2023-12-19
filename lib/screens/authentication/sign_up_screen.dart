@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:project_haajar/providers/appwrite_authentication_provider.dart';
+import 'package:project_haajar/controllers/authentication_controller.dart';
 import 'package:project_haajar/router.dart';
 
-class SignUpScreen extends ConsumerStatefulWidget {
+class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
   @override
-  ConsumerState<SignUpScreen> createState() => _SignInScreenState();
+  State<SignUpScreen> createState() => _SignInScreenState();
 }
 
-class _SignInScreenState extends ConsumerState<SignUpScreen> {
+class _SignInScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
 
   final _nameController = TextEditingController();
@@ -32,54 +31,39 @@ class _SignInScreenState extends ConsumerState<SignUpScreen> {
     setState(() {
       _isLoading = true;
     });
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("Signing Up..."),
-        duration: Duration(seconds: 1),
-      ),
-    );
 
-    try {
-      ref
-          .read(appwriteAuthenticationProvider.notifier)
-          .registerUser(
-              email: _emailController.value.text,
-              password: _passwordController.value.text,
-              name: _nameController.value.text,
-              role: "student")
-          .then(
-        (value) {
-          showDialog(
-            context: context,
-            builder: (ctx) {
-              return AlertDialog(
-                title: const Text("Verification Mail sent"),
-                content: const Text(
-                  "Please verify your email by clicking the url in the mail from appwrite",
+    auth
+        .registerUser(
+            email: _emailController.value.text,
+            password: _passwordController.value.text,
+            name: _nameController.value.text,
+            role: "student")
+        .then(
+      (value) {
+        showDialog(
+          context: context,
+          builder: (ctx) {
+            return AlertDialog(
+              title: const Text("Verification Mail sent"),
+              content: const Text(
+                "Please verify your email by clicking the url in the mail from appwrite",
+              ),
+              actions: [
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _isLoading = false;
+                    });
+                    Navigator.of(ctx).pop();
+                  },
+                  child: const Text("Ok"),
                 ),
-                actions: [
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        _isLoading = false;
-                      });
-                      Navigator.of(ctx).pop();
-                    },
-                    child: const Text("Ok"),
-                  ),
-                ],
-              );
-            },
-          );
-        },
-      );
-    } catch (err) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(err.toString()),
-        ),
-      );
-    }
+              ],
+            );
+          },
+        );
+      },
+    );
   }
 
   @override

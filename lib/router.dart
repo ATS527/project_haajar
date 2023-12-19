@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:project_haajar/controllers/authentication_controller.dart';
 import 'package:project_haajar/screens/authentication/confirmation_mail_screen.dart';
 import 'package:project_haajar/screens/authentication/forgot_password_prompt.dart';
 import 'package:project_haajar/screens/authentication/forgot_password_screen.dart';
@@ -6,15 +7,28 @@ import 'package:project_haajar/screens/authentication/sign_in_screen.dart';
 import 'package:project_haajar/screens/authentication/sign_up_screen.dart';
 import 'package:project_haajar/screens/authentication/splash_screen.dart';
 import 'package:project_haajar/screens/bottom_navigation/bottom_navigation_bar.dart';
+import 'package:signals/signals_flutter.dart';
 
 class CustomRouter {
   static GoRouter routerFunction() {
     return GoRouter(
+      refreshListenable: auth.isLoggedIn.toValueListenable(),
       routes: [
         GoRoute(
-          path: '/',
-          builder: (context, state) => const SplashScreen(),
-        ),
+            path: '/',
+            redirect: (context, state) {
+              if (auth.currentUser.peek() == null) {
+                return AppRouteConstants.signInScreen;
+              }
+              return null;
+            },
+            builder: (context, state) => const SplashScreen(),
+            routes: [
+              GoRoute(
+                path: 'bottom-navigation-bar',
+                builder: (context, state) => const BottomNavigationBarCustom(),
+              ),
+            ]),
         GoRoute(
           path: '/forgot-password',
           builder: (context, state) => ForgotPasswordScreen(
@@ -29,10 +43,6 @@ class CustomRouter {
         GoRoute(
           path: '/sign-up',
           builder: (context, state) => const SignUpScreen(),
-        ),
-        GoRoute(
-          path: '/bottom-navigation-bar',
-          builder: (context, state) => const BottomNavigationBarCustom(),
         ),
         GoRoute(
           path: '/forgot-password-prompt',

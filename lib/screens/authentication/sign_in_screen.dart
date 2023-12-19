@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:project_haajar/providers/appwrite_authentication_provider.dart';
+import 'package:project_haajar/controllers/authentication_controller.dart';
 import 'package:project_haajar/router.dart';
 
-class SignInScreen extends ConsumerStatefulWidget {
+class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
   @override
-  ConsumerState<SignInScreen> createState() => _SignInScreenState();
+  State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _SignInScreenState extends ConsumerState<SignInScreen> {
+class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
 
   final _emailController = TextEditingController();
@@ -30,34 +29,25 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
   }
 
   void signIn() async {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("Signing In..."),
-        duration: Duration(seconds: 1),
-      ),
-    );
-    try {
-      ref
-          .read(appwriteAuthenticationProvider.notifier)
-          .loginUser(
-              email: _emailController.value.text,
-              password: _passwordController.value.text)
-          .then((value) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Signed In Successfully"),
-            duration: Duration(seconds: 1),
-          ),
-        );
-        context.go(AppRouteConstants.bottomNavigationBar);
-      });
-    } catch (err) {
+    auth
+        .login(
+            email: _emailController.value.text,
+            password: _passwordController.value.text)
+        .then((_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Signed In Successfully"),
+          duration: Duration(seconds: 1),
+        ),
+      );
+      context.go(AppRouteConstants.splashScreen);
+    }).catchError((err) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(err.toString()),
         ),
       );
-    }
+    });
   }
 
   @override

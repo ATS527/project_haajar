@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:project_haajar/providers/appwrite_authentication_provider.dart';
+import 'package:project_haajar/controllers/authentication_controller.dart';
 
-class ForgotPasswordPrompt extends ConsumerStatefulWidget {
+class ForgotPasswordPrompt extends StatefulWidget {
   const ForgotPasswordPrompt({super.key});
 
   @override
-  ConsumerState<ForgotPasswordPrompt> createState() =>
-      _ForgotPasswordPromptState();
+  State<ForgotPasswordPrompt> createState() => _ForgotPasswordPromptState();
 }
 
-class _ForgotPasswordPromptState extends ConsumerState<ForgotPasswordPrompt> {
+class _ForgotPasswordPromptState extends State<ForgotPasswordPrompt> {
   final _emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
@@ -21,10 +19,7 @@ class _ForgotPasswordPromptState extends ConsumerState<ForgotPasswordPrompt> {
   }
 
   void forgotPasswordCreate() async {
-    ref
-        .read(appwriteAuthenticationProvider.notifier)
-        .createPasswordRecovery(email: _emailController.value.text)
-        .then(
+    auth.createPasswordRecovery(email: _emailController.value.text).then(
       (value) {
         showDialog(
           context: context,
