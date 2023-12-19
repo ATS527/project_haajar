@@ -6,14 +6,14 @@ import 'package:project_haajar/screens/authentication/forgot_password_screen.dar
 import 'package:project_haajar/screens/authentication/sign_in_screen.dart';
 import 'package:project_haajar/screens/authentication/sign_up_screen.dart';
 import 'package:project_haajar/screens/authentication/splash_screen.dart';
-import 'package:project_haajar/screens/bottom_navigation/bottom_navigation_bar.dart';
+import 'package:project_haajar/screens/home_page_screens/home_screen.dart';
 import 'package:signals/signals_flutter.dart';
 
 class CustomRouter {
   static GoRouter routerFunction() {
     return GoRouter(
       refreshListenable: auth.isLoggedIn.toValueListenable(),
-      routes: [
+      routes: <RouteBase>[
         GoRoute(
             path: '/',
             redirect: (context, state) {
@@ -25,8 +25,8 @@ class CustomRouter {
             builder: (context, state) => const SplashScreen(),
             routes: [
               GoRoute(
-                path: 'bottom-navigation-bar',
-                builder: (context, state) => const BottomNavigationBarCustom(),
+                path: 'home-screen',
+                builder: (context, state) => const HomeScreen(),
               ),
             ]),
         GoRoute(
@@ -65,7 +65,7 @@ class AppRouteConstants {
   static const String forgotPasswordScreen = "/forgot-password";
   static const String signInScreen = "/sign-in";
   static const String signUpScreen = "/sign-up";
-  static const String bottomNavigationBar = "/bottom-navigation-bar";
+  static const String homeScreen = "/home-screen";
   static const String forgotPasswordPrompt = "/forgot-password-prompt";
   static const String confirmationMailScreen = "/confirmation-mail-screen";
 }

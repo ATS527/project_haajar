@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_haajar/controllers/authentication_controller.dart';
 import 'package:project_haajar/screens/authentication/sign_in_screen.dart';
-import 'package:project_haajar/screens/bottom_navigation/bottom_navigation_bar.dart';
+import 'package:project_haajar/screens/home_page_screens/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
             );
           }
           if (snapshot.hasData) {
-            return const BottomNavigationBarCustom();
+            return const HomeScreen();
           }
           return const SignInScreen();
         },
