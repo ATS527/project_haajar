@@ -25,38 +25,41 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Watch((context) {
       final isDark = auth.themeMode() == ThemeMode.dark;
       return Scaffold(
-        body: Column(
-          children: [
-            Card(
-              child: ListTile(
-                title: const Text("Change Theme"),
-                onTap: () async {
-                  auth.themeMode.value =
-                      isDark ? ThemeMode.light : ThemeMode.dark;
-                  await auth
-                      .updateUserPrefs({"theme": isDark ? "light" : "dark"});
-                },
-                trailing: IconButton(
-                  onPressed: () async {
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Column(
+            children: [
+              Card(
+                child: ListTile(
+                  title: const Text("Change Theme"),
+                  onTap: () async {
                     auth.themeMode.value =
                         isDark ? ThemeMode.light : ThemeMode.dark;
                     await auth
                         .updateUserPrefs({"theme": isDark ? "light" : "dark"});
                   },
-                  icon: Icon(isDark ? Icons.light_mode : Icons.dark_mode),
+                  trailing: IconButton(
+                    onPressed: () async {
+                      auth.themeMode.value =
+                          isDark ? ThemeMode.light : ThemeMode.dark;
+                      await auth.updateUserPrefs(
+                          {"theme": isDark ? "light" : "dark"});
+                    },
+                    icon: Icon(isDark ? Icons.light_mode : Icons.dark_mode),
+                  ),
+                  //increase height
+                  minVerticalPadding: 30,
                 ),
-                //increase height
-                minVerticalPadding: 30,
               ),
-            ),
-            settingsCard(
-              context,
-              title: "Logout",
-              icon: Icons.logout,
-              onTap: () => logout(context),
-            ),
-            // change theme switch
-          ],
+              settingsCard(
+                context,
+                title: "Logout",
+                icon: Icons.logout,
+                onTap: () => logout(context),
+              ),
+              // change theme switch
+            ],
+          ),
         ),
       );
     });
