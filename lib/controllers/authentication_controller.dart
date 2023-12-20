@@ -1,5 +1,6 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
+import 'package:flutter/material.dart';
 import 'package:project_haajar/config/appwrite_config.dart';
 import 'package:signals/signals.dart';
 
@@ -11,6 +12,25 @@ class AuthenticationController {
   late final isLoggedIn = computed(() => currentUser() != null);
 
   late final currentUserName = computed(() => currentUser()?.name ?? 'N/A');
+
+  late final userPrefs = computed(() => currentUser()?.prefs.toMap() ?? {});
+
+  final themeMode = signal(ThemeMode.system);
+
+  // late final themeMode = computed(() {
+  //   if (brightness() == Brightness.dark) {
+  //     return ThemeMode.dark;
+  //   } else {
+  //     return ThemeMode.light;
+  //   }
+  // });
+
+  Future<void> updateUserPrefs(Map<String, String> prefs) async {
+    await _account.updatePrefs(prefs: {
+      "role": userPrefs.value["role"] ?? "null",
+      ...prefs,
+    });
+  }
 
   Future<User> getCurrentlyLoggedInUser() {
     return _account.get();
@@ -42,6 +62,7 @@ class AuthenticationController {
         email: email,
         password: password,
       );
+      await _account.updatePrefs(prefs: {"role": role, "theme": "light"});
       return await _account.createVerification(
         url: "https://haajar-app.govindsr.me/confirmation-mail-screen",
       );

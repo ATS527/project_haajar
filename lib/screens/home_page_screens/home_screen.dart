@@ -2,79 +2,73 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:project_haajar/controllers/authentication_controller.dart';
 import 'package:project_haajar/screens/home_page_screens/dashboard_screen.dart';
+import 'package:project_haajar/screens/home_page_screens/faculty_management_screen.dart';
 import 'package:project_haajar/screens/home_page_screens/settings_screen.dart';
+import 'package:signals/signals_flutter.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+final drawerIndex = signal(0);
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
+class HomeScreen extends StatelessWidget {
+  HomeScreen({super.key});
 
-class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
-
-  void logout() async {
-    await auth.logoutUser().catchError((err) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(err.toString()),
-        ),
-      );
-    });
-  }
-
-  List<Widget> drawableWidgets = [
+  final List<Widget> drawableWidgets = [
     const DashboardScreen(),
+    const FacultyManagementScreen(),
     const SettingsScreen(),
+  ];
+
+  final List<String> drawerTitles = [
+    "Welcome ${auth.currentUserName.peek()}", //dashboard
+    "Faculty Management",
+    "Settings",
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: logout,
-            icon: const Icon(Icons.logout),
-          ),
-        ],
-        title: Text("Welcome ${auth.currentUserName.peek()}"),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 198, 210, 219),
-              ),
-              child: Text('Project Haajar'),
-            ),
-            ListTile(
-              title: const Text('Dashboard'),
-              selected: _selectedIndex == 0,
-              onTap: () {
-                setState(() {
-                  _selectedIndex = 0;
-                });
-                context.pop();
-              },
-            ),
-            ListTile(
-              title: const Text('Settings'),
-              selected: _selectedIndex == 1,
-              onTap: () {
-                setState(() {
-                  _selectedIndex = 1;
-                });
-                context.pop();
-              },
-            ),
-          ],
+    return Watch(
+      (context) => Scaffold(
+        appBar: AppBar(
+          title: Text(drawerTitles.elementAt(drawerIndex.value)),
         ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                ),
+                child: const Text('Project Haajar'),
+              ),
+              ListTile(
+                title: const Text('Dashboard'),
+                selected: drawerIndex.peek() == 0,
+                onTap: () {
+                  drawerIndex.value = 0;
+                  context.pop();
+                },
+              ),
+              ListTile(
+                title: const Text('Faculty Management'),
+                selected: drawerIndex.peek() == 1,
+                onTap: () {
+                  drawerIndex.value = 1;
+                  context.pop();
+                },
+              ),
+              ListTile(
+                title: const Text('Settings'),
+                selected: drawerIndex.peek() == 2,
+                onTap: () {
+                  drawerIndex.value = 2;
+                  context.pop();
+                },
+              ),
+            ],
+          ),
+        ),
+        body: drawableWidgets.elementAt(drawerIndex.value),
       ),
-      body: drawableWidgets.elementAt(_selectedIndex),
     );
   }
 }
