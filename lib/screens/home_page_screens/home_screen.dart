@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:project_haajar/controllers/authentication_controller.dart';
 import 'package:project_haajar/screens/home_page_screens/dashboard_screen.dart';
-import 'package:project_haajar/screens/home_page_screens/faculty_management_screen.dart';
+import 'package:project_haajar/screens/home_page_screens/faculty_management/faculty_management_screen.dart';
 import 'package:project_haajar/screens/home_page_screens/settings_screen.dart';
 import 'package:signals/signals_flutter.dart';
 
