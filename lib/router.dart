@@ -12,6 +12,7 @@ import 'package:project_haajar/screens/home_page_screens/faculty_management/edit
 import 'package:project_haajar/screens/home_page_screens/faculty_management/faculty_management_screen.dart';
 import 'package:project_haajar/screens/home_page_screens/home_screen.dart';
 import 'package:project_haajar/screens/home_page_screens/settings_screen.dart';
+
 import 'package:signals/signals_flutter.dart';
 
 class CustomRouter {
@@ -50,6 +51,7 @@ class CustomRouter {
                           GoRoute(
                               path: 'edit-faculty',
                               builder: (context, state) {
+                                final id = state.uri.queryParameters["id"];
                                 final name = state.uri.queryParameters["name"];
                                 final facultyMail =
                                     state.uri.queryParameters["faculty_mail"];
@@ -68,13 +70,13 @@ class CustomRouter {
                                         : 0.0;
 
                                 return EditFacultyDetailsScreen(
-                                  name: name ?? "",
-                                  facultyMail: facultyMail ?? "",
-                                  department: department ?? "",
-                                  experience: experience,
-                                  qualification: qualification ?? "",
-                                  subjects: subjects ?? [],
-                                );
+                                    name: name ?? "",
+                                    facultyMail: facultyMail ?? "",
+                                    department: department ?? "",
+                                    experience: experience,
+                                    qualification: qualification ?? "",
+                                    subjects: subjects ?? [],
+                                    id: id ?? "");
                               }),
                         ]),
                     GoRoute(

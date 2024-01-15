@@ -35,6 +35,8 @@ dependencies:
   go_router: ^12.1.1
 
   signals: ^2.1.6
+  connectivity_plus: ^5.0.2
+  internet_connection_checker: ^1.0.0+1
 
 dev_dependencies:
   flutter_test:

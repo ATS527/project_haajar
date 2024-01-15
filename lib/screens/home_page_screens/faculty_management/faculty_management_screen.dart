@@ -51,8 +51,12 @@ class _FacultyManagementScreenState extends State<FacultyManagementScreen> {
                                   snapshot.data?.documents[index].data["name"]),
                               trailing: IconButton(
                                 onPressed: () {
-                                  context.push(
-                                      "/home-screen/faculty-management/edit-faculty?name=${snapshot.data?.documents[index].data["name"]}&faculty_mail=${snapshot.data?.documents[index].data["faculty_mail"]}&department=${snapshot.data?.documents[index].data["department"]}&subjects=${snapshot.data?.documents[index].data["subjects"]?.join(",")}&qualification=${snapshot.data?.documents[index].data["qualification"]}&experience=${snapshot.data?.documents[index].data["experience"]}");
+                                  context
+                                      .push(
+                                          "/home-screen/faculty-management/edit-faculty?name=${snapshot.data?.documents[index].data["name"]}&faculty_mail=${snapshot.data?.documents[index].data["faculty_mail"]}&department=${snapshot.data?.documents[index].data["department"]}&subjects=${snapshot.data?.documents[index].data["subjects"]?.join(",")}&qualification=${snapshot.data?.documents[index].data["qualification"]}&experience=${snapshot.data?.documents[index].data["experience"]}&id=${snapshot.data?.documents[index].data["\$id"]}")
+                                      .then((_) {
+                                    setState(() {});
+                                  });
                                 },
                                 icon: const Icon(
                                   Icons.edit,

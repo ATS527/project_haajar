@@ -37,8 +37,37 @@ class FacultyManagement {
         databaseId: 'faculty',
         collectionId: 'faculty_details',
       );
+      print(document.documents[0].data);
       return document;
     } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<Document> editFaculty({
+    required String id,
+    required String name,
+    required String mail,
+    required String department,
+    required List<String> subjects,
+    required String qualification,
+    required String experience,
+  }) async {
+    try {
+      final document = databaseClient.value.updateDocument(
+          databaseId: 'faculty',
+          collectionId: 'faculty_details',
+          documentId: id,
+          data: {
+            "name": name,
+            "faculty_mail": mail,
+            "department": department,
+            "subjects": subjects,
+            "qualification": qualification,
+            "experience": double.parse(experience),
+          });
+      return document;
+    } catch (_) {
       rethrow;
     }
   }
