@@ -80,7 +80,9 @@ class _FacultyManagementScreenState extends State<FacultyManagementScreen> {
                             height: 60,
                             child: ElevatedButton.icon(
                               icon: const Icon(Icons.refresh),
-                              onPressed: () {},
+                              onPressed: () {
+                                setState(() {});
+                              },
                               label: const Text("Refresh"),
                             ),
                           ),
@@ -102,7 +104,9 @@ class _FacultyManagementScreenState extends State<FacultyManagementScreen> {
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
-            context.push(AppRouteConstants.addFacultyScreen);
+            context.push(AppRouteConstants.addFacultyScreen).then((value) {
+              setState(() {});
+            });
           },
           child: const Icon(Icons.add)),
     );

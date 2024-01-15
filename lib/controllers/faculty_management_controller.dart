@@ -71,6 +71,20 @@ class FacultyManagement {
       rethrow;
     }
   }
+
+  Future deleteFaculty({
+    required String id,
+  }) async {
+    try {
+      await databaseClient.value.deleteDocument(
+        databaseId: 'faculty',
+        collectionId: 'faculty_details',
+        documentId: id,
+      );
+    } catch (_) {
+      rethrow;
+    }
+  }
 }
 
 final facultyManagement = FacultyManagement();

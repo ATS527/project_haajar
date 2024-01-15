@@ -220,6 +220,23 @@ class _EditFacultyDetailsScreenState extends State<EditFacultyDetailsScreen> {
             ),
           ),
           const SizedBox(
+            height: 30,
+          ),
+          SizedBox(
+            width: double.infinity,
+            height: 60,
+            child: ElevatedButton(
+              onPressed: deleteFaculty,
+              child: const Text(
+                "Delete Faculty",
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.red),
+              ),
+            ),
+          ),
+          const SizedBox(
             height: 40,
           ),
         ],
@@ -244,6 +261,30 @@ class _EditFacultyDetailsScreenState extends State<EditFacultyDetailsScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Faculty Edited Successfully"),
+        ),
+      );
+    }).catchError((err) {
+      _isLoading.value = false;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(err),
+        ),
+      );
+    });
+  }
+
+  void deleteFaculty() async {
+    _isLoading.value = true;
+    await facultyManagement
+        .deleteFaculty(
+      id: widget.id,
+    )
+        .then((value) {
+      _isLoading.value = false;
+      context.pop();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Faculty Deleted Successfully"),
         ),
       );
     }).catchError((err) {
