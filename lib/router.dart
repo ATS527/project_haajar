@@ -48,10 +48,34 @@ class CustomRouter {
                                 const AddFacultyScreen(),
                           ),
                           GoRoute(
-                            path: 'edit-faculty',
-                            builder: (context, state) =>
-                                const EditFacultyDetailsScreen(),
-                          ),
+                              path: 'edit-faculty',
+                              builder: (context, state) {
+                                final name = state.uri.queryParameters["name"];
+                                final facultyMail =
+                                    state.uri.queryParameters["faculty_mail"];
+                                final department =
+                                    state.uri.queryParameters["department"];
+                                final subjects = state
+                                    .uri.queryParameters["subjects"]
+                                    ?.split(",");
+                                final qualification =
+                                    state.uri.queryParameters["qualification"];
+                                final experience =
+                                    state.uri.queryParameters["experience"] !=
+                                            null
+                                        ? double.parse(state
+                                            .uri.queryParameters["experience"]!)
+                                        : 0.0;
+
+                                return EditFacultyDetailsScreen(
+                                  name: name ?? "",
+                                  facultyMail: facultyMail ?? "",
+                                  department: department ?? "",
+                                  experience: experience,
+                                  qualification: qualification ?? "",
+                                  subjects: subjects ?? [],
+                                );
+                              }),
                         ]),
                     GoRoute(
                       path: 'settings',

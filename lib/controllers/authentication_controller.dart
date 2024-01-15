@@ -17,14 +17,6 @@ class AuthenticationController {
 
   final themeMode = signal(ThemeMode.system);
 
-  // late final themeMode = computed(() {
-  //   if (brightness() == Brightness.dark) {
-  //     return ThemeMode.dark;
-  //   } else {
-  //     return ThemeMode.light;
-  //   }
-  // });
-
   Future<void> updateUserPrefs(Map<String, String> prefs) async {
     await _account.updatePrefs(prefs: {
       "role": userPrefs.value["role"] ?? "null",
@@ -42,6 +34,7 @@ class AuthenticationController {
       currentUser.value = user;
     } catch (err) {
       currentUser.value = null;
+      rethrow;
     }
   }
 

@@ -7,15 +7,17 @@ import 'package:signals/signals_flutter.dart';
 
 Future main() async {
   await dotenv.load(fileName: ".env");
-  await auth.initialiseUser();
-  realtimeLogs.subscribeRealtime();
-  if (auth.userPrefs.value["data"]["theme"] == "light") {
-    auth.themeMode.value = ThemeMode.light;
-  } else if (auth.userPrefs.value["data"]["theme"] == "dark") {
-    auth.themeMode.value = ThemeMode.dark;
-  } else {
-    auth.themeMode.value = ThemeMode.system;
-  }
+  await auth.initialiseUser().then((value) {
+    realtimeLogs.subscribeRealtime();
+    if (auth.userPrefs.value["data"]["theme"] == "light") {
+      auth.themeMode.value = ThemeMode.light;
+    } else if (auth.userPrefs.value["data"]["theme"] == "dark") {
+      auth.themeMode.value = ThemeMode.dark;
+    } else {
+      auth.themeMode.value = ThemeMode.system;
+    }
+  }).catchError((_) {});
+
   runApp(
     const MaterialApp(
       home: MyApp(),
