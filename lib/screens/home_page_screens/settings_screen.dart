@@ -25,44 +25,95 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Watch((context) {
       final isDark = auth.themeMode() == ThemeMode.dark;
       return Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Column(
-            children: [
-              Card(
-                child: ListTile(
-                  title: const Text("Change Theme"),
-                  onTap: () async {
-                    auth.themeMode.value =
-                        isDark ? ThemeMode.light : ThemeMode.dark;
-                    await auth
-                        .updateUserPrefs({"theme": isDark ? "light" : "dark"});
-                  },
-                  trailing: IconButton(
-                    onPressed: () async {
-                      auth.themeMode.value =
-                          isDark ? ThemeMode.light : ThemeMode.dark;
-                      await auth.updateUserPrefs(
-                          {"theme": isDark ? "light" : "dark"});
-                    },
-                    icon: Icon(isDark ? Icons.light_mode : Icons.dark_mode),
-                  ),
-                  //increase height
-                  minVerticalPadding: 30,
-                ),
-              ),
-              settingsCard(
-                context,
-                title: "Logout",
-                icon: Icons.logout,
-                onTap: () => logout(context),
-              ),
-              // change theme switch
-            ],
-          ),
+        body: LayoutBuilder(
+          builder: (context, constraints) {
+            if (constraints.maxWidth > 600) {
+              return desktopView(isDark);
+            } else {
+              return mobileView(isDark);
+            }
+          },
         ),
       );
     });
+  }
+
+  Widget mobileView(isDark) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Column(
+        children: [
+          Card(
+            child: ListTile(
+              title: const Text("Change Theme"),
+              onTap: () async {
+                auth.themeMode.value =
+                    isDark ? ThemeMode.light : ThemeMode.dark;
+                await auth
+                    .updateUserPrefs({"theme": isDark ? "light" : "dark"});
+              },
+              trailing: IconButton(
+                onPressed: () async {
+                  auth.themeMode.value =
+                      isDark ? ThemeMode.light : ThemeMode.dark;
+                  await auth
+                      .updateUserPrefs({"theme": isDark ? "light" : "dark"});
+                },
+                icon: Icon(isDark ? Icons.light_mode : Icons.dark_mode),
+              ),
+              //increase height
+              minVerticalPadding: 30,
+            ),
+          ),
+          settingsCard(
+            context,
+            title: "Logout",
+            icon: Icons.logout,
+            onTap: () => logout(context),
+          ),
+          // change theme switch
+        ],
+      ),
+    );
+  }
+
+  Widget desktopView(isDark) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 30),
+      child: Column(
+        children: [
+          Card(
+            child: ListTile(
+              title: const Text("Change Theme"),
+              onTap: () async {
+                auth.themeMode.value =
+                    isDark ? ThemeMode.light : ThemeMode.dark;
+                await auth
+                    .updateUserPrefs({"theme": isDark ? "light" : "dark"});
+              },
+              trailing: IconButton(
+                onPressed: () async {
+                  auth.themeMode.value =
+                      isDark ? ThemeMode.light : ThemeMode.dark;
+                  await auth
+                      .updateUserPrefs({"theme": isDark ? "light" : "dark"});
+                },
+                icon: Icon(isDark ? Icons.light_mode : Icons.dark_mode),
+              ),
+              //increase height
+              minVerticalPadding: 30,
+            ),
+          ),
+          settingsCard(
+            context,
+            title: "Logout",
+            icon: Icons.logout,
+            onTap: () => logout(context),
+          ),
+          // change theme switch
+        ],
+      ),
+    );
   }
 
   Widget settingsCard(BuildContext context,
