@@ -37,6 +37,8 @@ dependencies:
   signals: ^2.1.6
   connectivity_plus: ^5.0.2
   internet_connection_checker: ^1.0.0+1
+  file_picker: ^6.1.1
+  xml2json: ^6.2.2
 
 dev_dependencies:
   flutter_test:

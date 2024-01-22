@@ -4,6 +4,7 @@ import 'package:project_haajar/controllers/authentication_controller.dart';
 import 'package:project_haajar/screens/home_page_screens/dashboard_screen.dart';
 import 'package:project_haajar/screens/home_page_screens/faculty_management/faculty_management_screen.dart';
 import 'package:project_haajar/screens/home_page_screens/settings_screen.dart';
+import 'package:project_haajar/screens/home_page_screens/time_table_management/time_table_management_screen.dart';
 import 'package:signals/signals_flutter.dart';
 
 final drawerIndex = signal(0);
@@ -14,12 +15,14 @@ class HomeScreen extends StatelessWidget {
   final List<Widget> drawableWidgets = [
     const DashboardScreen(),
     const FacultyManagementScreen(),
+    const TimeTableManagementScreen(),
     const SettingsScreen(),
   ];
 
   final List<String> drawerTitles = [
     "Welcome ${auth.currentUserName.peek()}", //dashboard
     "Faculty Management",
+    "Time Table Management",
     "Settings",
   ];
 
@@ -57,10 +60,18 @@ class HomeScreen extends StatelessWidget {
                 },
               ),
               ListTile(
-                title: const Text('Settings'),
+                title: const Text('Time Table Management'),
                 selected: drawerIndex.peek() == 2,
                 onTap: () {
                   drawerIndex.value = 2;
+                  context.pop();
+                },
+              ),
+              ListTile(
+                title: const Text('Settings'),
+                selected: drawerIndex.peek() == 3,
+                onTap: () {
+                  drawerIndex.value = 3;
                   context.pop();
                 },
               ),

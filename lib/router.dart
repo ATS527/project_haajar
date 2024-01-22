@@ -12,6 +12,9 @@ import 'package:project_haajar/screens/home_page_screens/faculty_management/edit
 import 'package:project_haajar/screens/home_page_screens/faculty_management/faculty_management_screen.dart';
 import 'package:project_haajar/screens/home_page_screens/home_screen.dart';
 import 'package:project_haajar/screens/home_page_screens/settings_screen.dart';
+import 'package:project_haajar/screens/home_page_screens/time_table_management/add_time_table_screen.dart';
+import 'package:project_haajar/screens/home_page_screens/time_table_management/edit_time_table_screen.dart';
+import 'package:project_haajar/screens/home_page_screens/time_table_management/time_table_management_screen.dart';
 
 import 'package:signals/signals_flutter.dart';
 
@@ -38,6 +41,22 @@ class CustomRouter {
                       path: 'dashboard',
                       builder: (context, state) => const DashboardScreen(),
                     ),
+                    GoRoute(
+                        path: 'time-table-management',
+                        builder: (context, state) =>
+                            const TimeTableManagementScreen(),
+                        routes: [
+                          GoRoute(
+                            path: 'edit-time-table-screen',
+                            builder: (context, state) =>
+                                const EditTimeTableScreen(),
+                          ),
+                          GoRoute(
+                            path: 'add-time-table-screen',
+                            builder: (context, state) =>
+                                const AddTimeTableScreen(),
+                          ),
+                        ]),
                     GoRoute(
                         path: 'faculty-management',
                         builder: (context, state) =>
@@ -132,4 +151,13 @@ class AppRouteConstants {
       "/home-screen/faculty-management/add-faculty";
   static const String editFacultyDetailsScreen =
       "/home-screen/faculty-management/edit-faculty";
+
+  static const String timeTableManagementScreen =
+      "/home-screen/time-table-management";
+
+  static const String addTimeTableScreen =
+      "/home-screen/time-table-management/add-time-table-screen";
+
+  static const String editTimeTableScreen =
+      "/home-screen/time-table-management/edit-time-table-screen";
 }
