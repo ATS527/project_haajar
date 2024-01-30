@@ -1,13 +1,14 @@
-import 'dart:convert';
 import 'dart:io';
 
+import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:project_haajar/widgets/text_input_widget.dart';
-import 'package:xml2json/xml2json.dart';
+import 'package:project_haajar/models/timetable.dart';
 
 class AddTimeTableScreen extends StatelessWidget {
-  const AddTimeTableScreen({super.key});
+  AddTimeTableScreen({super.key});
+
+  List<TimeTable> timeTableList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -38,26 +39,29 @@ class AddTimeTableScreen extends StatelessWidget {
                       FilePickerResult? result =
                           await FilePicker.platform.pickFiles(
                         type: FileType.custom,
-                        allowedExtensions: ['xml'],
+                        allowedExtensions: ['csv'],
                       );
 
                       if (result != null) {
                         File file = File(result.files.single.path!);
                         Future<String> futureContent = file.readAsString();
-                        futureContent.then((xml) {
-                          final xml2json = Xml2Json();
-                          xml2json.parse(xml);
-                          final jsonString = xml2json.toParker();
-                          final jsonObject = json.decode(jsonString);
-                          
+                        futureContent.then((csv) {
+                          List<List<dynamic>> rowsAsListOfValues =
+                              const CsvToListConverter(
+                            eol: '\n',
+                          ).convert(csv).toList();
+                          rowsAsListOfValues.removeAt(0);
+                          for (var row in rowsAsListOfValues) {
+                            timeTableList.add(TimeTable.fromlist(row));
+                          }
+                          print(timeTableList[0]);
                         });
                       } else {
-                        // User canceled the picker
                         print("cancelled");
                       }
                     },
                     icon: const Icon(Icons.upload_file),
-                    label: const Text("Upload xml file"),
+                    label: const Text("Upload csv file"),
                   ),
                 ),
               ],

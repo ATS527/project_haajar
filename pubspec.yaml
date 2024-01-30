@@ -39,6 +39,7 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   file_picker: ^6.1.1
   xml2json: ^6.2.2
+  csv: ^5.1.1
 
 dev_dependencies:
   flutter_test:
