@@ -1,14 +1,17 @@
 import 'dart:io';
-
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:project_haajar/models/timetable.dart';
+import 'package:project_haajar/widgets/time_table_view.dart';
+import 'package:signals/signals_flutter.dart';
 
 class AddTimeTableScreen extends StatelessWidget {
   AddTimeTableScreen({super.key});
 
   List<TimeTable> timeTableList = [];
+
+  final isSuccess = signal<bool?>(null);
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +44,6 @@ class AddTimeTableScreen extends StatelessWidget {
                         type: FileType.custom,
                         allowedExtensions: ['csv'],
                       );
-
                       if (result != null) {
                         File file = File(result.files.single.path!);
                         Future<String> futureContent = file.readAsString();
@@ -50,13 +52,14 @@ class AddTimeTableScreen extends StatelessWidget {
                               const CsvToListConverter(
                             eol: '\n',
                           ).convert(csv).toList();
+                          isSuccess.value = true;
                           rowsAsListOfValues.removeAt(0);
                           for (var row in rowsAsListOfValues) {
                             timeTableList.add(TimeTable.fromlist(row));
                           }
-                          print(timeTableList[0]);
                         });
                       } else {
+                        isSuccess.value = false;
                         print("cancelled");
                       }
                     },
@@ -64,6 +67,28 @@ class AddTimeTableScreen extends StatelessWidget {
                     label: const Text("Upload csv file"),
                   ),
                 ),
+                const SizedBox(height: 30),
+                Watch((context) {
+                  if (isSuccess.value == null) {
+                    return const SizedBox(
+                      child: Text("No File Selected"),
+                    );
+                  } else if (isSuccess.value == true) {
+                    return TimeTableView(
+                      timeTableList: timeTableList,
+                    );
+                  } else {
+                    // failed uploading
+                    // show error message
+                    return const SizedBox(
+                      child: Text(
+                        "Failed Uploading",
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    );
+                    //
+                  }
+                }),
               ],
             ),
           ),
