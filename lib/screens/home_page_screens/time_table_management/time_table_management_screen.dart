@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:project_haajar/controllers/faculty_management_controller.dart';
 import 'package:project_haajar/router.dart';
+import 'package:project_haajar/widgets/time_table.dart';
 
 class TimeTableManagementScreen extends StatefulWidget {
   const TimeTableManagementScreen({super.key});
@@ -73,27 +74,7 @@ class _TimeTableManagementScreenState extends State<TimeTableManagementScreen> {
                       ),
                     );
                   } else if (snapshot.hasError) {
-                    return Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text("There is some error fetching faculties"),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          SizedBox(
-                            height: 60,
-                            child: ElevatedButton.icon(
-                              icon: const Icon(Icons.refresh),
-                              onPressed: () {
-                                setState(() {});
-                              },
-                              label: const Text("Refresh"),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
+                    return Timetable();
                   } else {
                     return const Expanded(
                       child: Center(
