@@ -14,7 +14,7 @@ class AttendenceController {
     await Permission.nearbyWifiDevices.request();
 
 // Bluetooth permissions
-    bool granted = !(await Future.wait([
+    !(await Future.wait([
       // Check
       Permission.bluetooth.isGranted,
       Permission.bluetoothAdvertise.isGranted,
