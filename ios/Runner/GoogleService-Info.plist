@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>17983312549-ch5r60udgpuvnatkm2c95fi2u8idrm5s.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.17983312549-ch5r60udgpuvnatkm2c95fi2u8idrm5s</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>17983312549-d9uniddkl4jp0qgr3ei4bphj2jaftsu0.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDcqae6Rn5uzoGcbUfID58-sCXH1dwmU2I</string>
+	<key>GCM_SENDER_ID</key>
+	<string>17983312549</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.haajarFinal</string>
+	<key>PROJECT_ID</key>
+	<string>project-haajar-10d7e</string>
+	<key>STORAGE_BUCKET</key>
+	<string>project-haajar-10d7e.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:17983312549:ios:3727d88f0878323f19734c</string>
+</dict>
+</plist>

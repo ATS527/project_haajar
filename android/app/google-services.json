@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "17983312549",
+    "project_id": "project-haajar-10d7e",
+    "storage_bucket": "project-haajar-10d7e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:17983312549:android:15e233135db2b34319734c",
+        "android_client_info": {
+          "package_name": "com.example.haajar_final"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "17983312549-d346oppflfi1na4erig3j8bl0h69tem0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDW9cO3yjWC2vl_CsZ-31UMpzWiFW13K8c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "17983312549-d346oppflfi1na4erig3j8bl0h69tem0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "17983312549-ch5r60udgpuvnatkm2c95fi2u8idrm5s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.haajarFinal"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
