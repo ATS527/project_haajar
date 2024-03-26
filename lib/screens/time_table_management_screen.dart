@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:haajar_final/controllers/timetable_controller.dart';
+import 'package:haajar_final/models/timetableDisplay.dart';
+import 'package:haajar_final/screens/time_table_display_screen.dart';
 
 class TimeTableManagementScreen extends StatefulWidget {
   const TimeTableManagementScreen({super.key});
@@ -80,6 +82,19 @@ class _TimeTableManagementScreenState extends State<TimeTableManagementScreen> {
                 timeTableController.saveTimeTable(selectedFile);
               },
               child: const Text("Save Time Table"),
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) {
+                    return const TimeTableDisplayScreen();
+                  },
+                ));
+              },
+              child: const Text("Get Time Table"),
             ),
           ],
         ),
