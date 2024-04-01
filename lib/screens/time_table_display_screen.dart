@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:haajar_final/controllers/timetable_controller.dart';
-import 'package:haajar_final/models/timetableDisplay.dart';
+import 'package:haajar_final/models/assigned_faculty.dart';
+import 'package:haajar_final/models/timetable_display.dart';
 import 'package:haajar_final/screens/time_table_subject_details_screen.dart';
 
 class TimeTableDisplayScreen extends StatefulWidget {
@@ -200,11 +201,27 @@ class _TimeTableDisplayScreenState extends State<TimeTableDisplayScreen> {
                 future: timeTableController.fetchAllTimeTable(),
                 builder: (_, snapshot) {
                   if (snapshot.hasData) {
-                    return renderCardList(
-                        yearSelected, daySelected, snapshot.data!.toList());
+                    if (snapshot.data!.isEmpty) {
+                      return const Center(
+                        child: Text("No Time Table Found"),
+                      );
+                    } else {
+                      return renderCardList(
+                          yearSelected, daySelected, snapshot.data!.toList());
+                    }
                   } else if (snapshot.hasError) {
-                    return const Center(
-                      child: Text("An error occurred"),
+                    return Column(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            setState(() {});
+                          },
+                          icon: const Icon(Icons.refresh),
+                        ),
+                        const Center(
+                          child: Text("An error occurred"),
+                        ),
+                      ],
                     );
                   } else {
                     return const Center(
@@ -226,12 +243,14 @@ class _TimeTableDisplayScreenState extends State<TimeTableDisplayScreen> {
     final hoursOnDay = [];
     final subjectsOnDay = [];
     final teachersOnDay = [];
+    final List<AssignedFaculty?> assignedFaculty = [];
 
     timeTables[index].days.asMap().forEach((i, element) {
       if (element == day) {
         hoursOnDay.add(timeTables[index].hours[i]);
         subjectsOnDay.add(timeTables[index].subjects[i]);
         teachersOnDay.add(timeTables[index].teachers[i]);
+        assignedFaculty.add(timeTables[index].assignedFaculty[i]);
       }
     });
 
@@ -266,6 +285,11 @@ class _TimeTableDisplayScreenState extends State<TimeTableDisplayScreen> {
                     Text(
                       "Teacher: ${teachersOnDay[i]}",
                     ),
+                    assignedFaculty[i] == null
+                        ? const SizedBox()
+                        : Text(
+                            "Assigned Teachers are: ${assignedFaculty[i]?.faculty.toString()}",
+                          )
                   ],
                 ),
               ),

@@ -14,11 +14,12 @@ class AttendenceManagementScreen extends StatefulWidget {
 
 class _AttendenceManagementScreenState
     extends State<AttendenceManagementScreen> {
+  bool isInitiatedAttendence = false;
   @override
   void dispose() {
-    // TODO: implement dispose
-    Nearby().stopAdvertising();
-
+    if (isInitiatedAttendence) {
+      Nearby().stopAdvertising();
+    }
     super.dispose();
   }
 
@@ -47,6 +48,7 @@ class _AttendenceManagementScreenState
                   attendenceController.startScanning(
                     auth.currentlyLoggedInUser.value?.displayName,
                   );
+                  isInitiatedAttendence = true;
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
                     return const AttendenceListingScreen();
@@ -72,7 +74,8 @@ class _AttendenceManagementScreenState
               onPressed: () {
                 attendenceController
                     .startAdvertising(
-                        auth.currentlyLoggedInUser.value?.displayName)
+                  auth.currentlyLoggedInUser.value?.displayName,
+                )
                     .then((value) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(

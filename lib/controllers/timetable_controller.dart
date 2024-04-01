@@ -3,8 +3,9 @@ import 'dart:io';
 import 'package:appwrite/appwrite.dart';
 import 'package:csv/csv.dart';
 import 'package:haajar_final/configs/appwrite_config.dart';
+import 'package:haajar_final/models/assigned_faculty.dart';
 import 'package:haajar_final/models/timetable.dart';
-import 'package:haajar_final/models/timetableDisplay.dart';
+import 'package:haajar_final/models/timetable_display.dart';
 
 class TimeTableController {
   Future<void> saveTimeTable(File? timeTableFile) async {
@@ -26,7 +27,7 @@ class TimeTableController {
           saveTimeTableToAppwrite(timetableList);
         });
       } else {
-        print("Already in db");
+        throw "One Time Table Already exists in DB";
       }
     } catch (err) {
       rethrow;
@@ -40,20 +41,49 @@ class TimeTableController {
         collectionId: '65d5ba163ebf01cfc313',
       );
 
-      List<TimeTableDisplay> timeTableDisplay = document.documents
-          .map((e) => TimeTableDisplay(
-                yearWithClass: e.data['yearWithClass'],
-                hours:
-                    e.data['hours'].map<String>((e) => e.toString()).toList(),
-                subjects: e.data['subjects']
-                    .map<String>((e) => e.toString())
-                    .toList(),
-                days: e.data['days'].map<String>((e) => e.toString()).toList(),
-                teachers: e.data['teachers']
-                    .map<String>((e) => e.toString())
-                    .toList(),
-              ))
-          .toList();
+      final assignedFaculties = await appwrite.db.listDocuments(
+        databaseId: '65d5a5cd5f8582b0a955',
+        collectionId: '66028dc46a32162167af',
+      );
+
+      List<TimeTableDisplay> timeTableDisplay = document.documents.map(
+        (e) {
+          return TimeTableDisplay(
+            yearWithClass: e.data['yearWithClass'],
+            hours: e.data['hours'].map<String>((e) => e.toString()).toList(),
+            subjects:
+                e.data['subjects'].map<String>((e) => e.toString()).toList(),
+            days: e.data['days'].map<String>((e) => e.toString()).toList(),
+            teachers:
+                e.data['teachers'].map<String>((e) => e.toString()).toList(),
+            assignedFaculty: List.generate(
+              e.data['hours'].length,
+              (index) => null,
+            ),
+          );
+        },
+      ).toList();
+
+      for (var j = 0; j < assignedFaculties.documents.length; j++) {
+        for (var k = 0; k < timeTableDisplay.length; k++) {
+          for (var i = 0; i < timeTableDisplay[k].days.length; i++) {
+            if (timeTableDisplay[k].yearWithClass ==
+                    assignedFaculties.documents[j].data['yearWithClass'] &&
+                timeTableDisplay[k].days[i] ==
+                    assignedFaculties.documents[j].data['day'] &&
+                timeTableDisplay[k].hours[i] ==
+                    assignedFaculties.documents[j].data['hour']) {
+              timeTableDisplay[k].assignedFaculty[i] = AssignedFaculty(
+                faculty: assignedFaculties.documents[j].data['faculty'],
+                subject: timeTableDisplay[k].subjects[i],
+                yearWithClass: timeTableDisplay[k].yearWithClass,
+                day: timeTableDisplay[k].days[i],
+                hour: timeTableDisplay[k].hours[i],
+              );
+            }
+          }
+        }
+      }
 
       return timeTableDisplay;
     } catch (err) {
@@ -277,6 +307,61 @@ class TimeTableController {
       );
 
       print("save done");
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<void> assignFaculties({
+    required String year,
+    required String day,
+    required String faculty,
+    required String subject,
+    required String hour,
+  }) async {
+    try {
+      final result = await appwrite.db.listDocuments(
+        databaseId: "65d5a5cd5f8582b0a955",
+        collectionId: "66028dc46a32162167af",
+      );
+
+      if (result.documents.isEmpty) {
+        await appwrite.db.createDocument(
+          databaseId: "65d5a5cd5f8582b0a955",
+          collectionId: "66028dc46a32162167af",
+          documentId: ID.unique(),
+          data: {
+            "yearWithClass": year,
+            "day": day,
+            "hour": hour,
+            "subject": subject,
+            "faculty": faculty,
+          },
+        );
+        return;
+      }
+
+      for (var doc in result.documents) {
+        if (doc.data['yearWithClass'] == year &&
+            doc.data['day'] == day &&
+            doc.data['hour'] == hour) {
+          throw "Already assigned";
+        } else {
+          await appwrite.db.createDocument(
+            databaseId: "65d5a5cd5f8582b0a955",
+            collectionId: "66028dc46a32162167af",
+            documentId: ID.unique(),
+            data: {
+              "yearWithClass": year,
+              "day": day,
+              "hour": hour,
+              "subject": subject,
+              "faculty": faculty,
+            },
+          );
+          break;
+        }
+      }
     } catch (err) {
       rethrow;
     }

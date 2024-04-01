@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:haajar_final/controllers/timetable_controller.dart';
-import 'package:haajar_final/models/timetableDisplay.dart';
 import 'package:haajar_final/screens/time_table_display_screen.dart';
 
 class TimeTableManagementScreen extends StatefulWidget {
@@ -17,6 +16,7 @@ class TimeTableManagementScreen extends StatefulWidget {
 class _TimeTableManagementScreenState extends State<TimeTableManagementScreen> {
   bool fileSelected = false;
   File? selectedFile;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -55,11 +55,13 @@ class _TimeTableManagementScreenState extends State<TimeTableManagementScreen> {
             const SizedBox(
               height: 25,
             ),
-            Text(
-              fileSelected
-                  ? "Selected File: ${selectedFile!.path.split('/').last}"
-                  : "No File Selected",
-            ),
+            !isLoading
+                ? Text(
+                    fileSelected
+                        ? "Selected File: ${selectedFile!.path.split('/').last}"
+                        : "No File Selected",
+                  )
+                : const CircularProgressIndicator(),
             const SizedBox(
               height: 25,
             ),
@@ -79,7 +81,32 @@ class _TimeTableManagementScreenState extends State<TimeTableManagementScreen> {
             ),
             ElevatedButton(
               onPressed: () {
-                timeTableController.saveTimeTable(selectedFile);
+                setState(() {
+                  isLoading = true;
+                });
+                timeTableController.saveTimeTable(selectedFile).then((value) {
+                  setState(() {
+                    isLoading = false;
+                  });
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        "Time Table Saved",
+                      ),
+                    ),
+                  );
+                }).catchError((err) {
+                  setState(() {
+                    isLoading = false;
+                  });
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        err.toString(),
+                      ),
+                    ),
+                  );
+                });
               },
               child: const Text("Save Time Table"),
             ),

@@ -1,9 +1,10 @@
+import 'package:haajar_final/models/attendence.dart';
 import 'package:nearby_connections/nearby_connections.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:signals/signals_flutter.dart';
 
 class AttendenceController {
-  final discoveredDevices = signal<List<Map<String, String>>>([]);
+  final discoveredDevices = listSignal<Attendence>([]);
 
   Future<void> takePermission() async {
     // location permission
@@ -60,15 +61,13 @@ class AttendenceController {
         Strategy.P2P_STAR,
         onEndpointFound: (String id, String userName, String serviceId) {
           // called when an advertiser is found
-          discoveredDevices.value.add({
-            "id": id,
-            "userName": userName,
-            "serviceId": serviceId,
-          });
+          discoveredDevices.value.add(
+            Attendence(id: id, userName: userName, serviceId: serviceId),
+          );
         },
         onEndpointLost: (String? id) {
           //called when an advertiser is lost (only if we weren't connected to it )
-          discoveredDevices.value.removeWhere((element) => element["id"] == id);
+          discoveredDevices.removeWhere((element) => element.id == id);
         },
         serviceId: "com.example.haajar_final", // uniquely identifies your app
       );

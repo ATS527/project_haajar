@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:haajar_final/models/timetableDisplay.dart';
+import 'package:haajar_final/controllers/timetable_controller.dart';
+import 'package:haajar_final/models/timetable_display.dart';
 
 class TimeTableSubjectDetailsScreen extends StatefulWidget {
   const TimeTableSubjectDetailsScreen({
@@ -100,9 +101,59 @@ class _TimeTableSubjectDetailsScreenState
             child: ListView(
               children: [
                 for (var teacher in teachersFree)
-                  Card(
-                    child: ListTile(
-                      title: Text(teacher),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 3),
+                    child: Card(
+                      child: ListTile(
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: const Text("Assign Teacher"),
+                                  content: Text(
+                                      "Are you sure you want to assign $teacher to ${widget.subjectName}"),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text("Cancel"),
+                                    ),
+                                    TextButton(
+                                        onPressed: () async {
+                                          timeTableController
+                                              .assignFaculties(
+                                            year: widget.year,
+                                            day: widget.day,
+                                            faculty: teacher,
+                                            subject: widget.subjectName,
+                                            hour: widget.hour,
+                                          )
+                                              .then((value) {
+                                            Navigator.of(context).pop();
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              const SnackBar(
+                                                content: Text(
+                                                    "Teacher Assigned Successfully"),
+                                              ),
+                                            );
+                                          }).catchError((err) {
+                                            Navigator.of(context).pop();
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                              content: Text(err.toString()),
+                                            ));
+                                          });
+                                        },
+                                        child: const Text("Assign")),
+                                  ],
+                                );
+                              });
+                        },
+                        title: Text(teacher),
+                      ),
                     ),
                   ),
               ],
