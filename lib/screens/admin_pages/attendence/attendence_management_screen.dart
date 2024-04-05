@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:haajar_final/controllers/attendence_controller.dart';
 import 'package:haajar_final/controllers/authentication_controller.dart';
-import 'package:haajar_final/screens/attendence_listing_screen.dart';
+import 'package:haajar_final/screens/admin_pages/attendence/attendence_listing_screen.dart';
 import 'package:nearby_connections/nearby_connections.dart';
 
 class AttendenceManagementScreen extends StatefulWidget {

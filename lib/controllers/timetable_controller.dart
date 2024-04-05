@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:appwrite/appwrite.dart';
 import 'package:csv/csv.dart';
 import 'package:haajar_final/configs/appwrite_config.dart';
+import 'package:haajar_final/controllers/push_notifications_controller.dart';
 import 'package:haajar_final/models/assigned_faculty.dart';
 import 'package:haajar_final/models/timetable.dart';
 import 'package:haajar_final/models/timetable_display.dart';
@@ -313,11 +314,7 @@ class TimeTableController {
   }
 
   Future<void> assignFaculties({
-    required String year,
-    required String day,
-    required String faculty,
-    required String subject,
-    required String hour,
+    required assignedFaculty,
   }) async {
     try {
       final result = await appwrite.db.listDocuments(
@@ -331,20 +328,23 @@ class TimeTableController {
           collectionId: "66028dc46a32162167af",
           documentId: ID.unique(),
           data: {
-            "yearWithClass": year,
-            "day": day,
-            "hour": hour,
-            "subject": subject,
-            "faculty": faculty,
+            "yearWithClass": assignedFaculty.yearWithClass,
+            "day": assignedFaculty.day,
+            "hour": assignedFaculty.hour,
+            "subject": assignedFaculty.subject,
+            "faculty": assignedFaculty.faculty,
           },
         );
+
+        await pushNotificationController
+            .sendAssignedFacultyPushNotification(assignedFaculty);
         return;
       }
 
       for (var doc in result.documents) {
-        if (doc.data['yearWithClass'] == year &&
-            doc.data['day'] == day &&
-            doc.data['hour'] == hour) {
+        if (doc.data['yearWithClass'] == assignedFaculty.yearWithClass &&
+            doc.data['day'] == assignedFaculty.day &&
+            doc.data['hour'] == assignedFaculty.hour) {
           throw "Already assigned";
         } else {
           await appwrite.db.createDocument(
@@ -352,13 +352,16 @@ class TimeTableController {
             collectionId: "66028dc46a32162167af",
             documentId: ID.unique(),
             data: {
-              "yearWithClass": year,
-              "day": day,
-              "hour": hour,
-              "subject": subject,
-              "faculty": faculty,
+              "yearWithClass": assignedFaculty.yearWithClass,
+              "day": assignedFaculty.day,
+              "hour": assignedFaculty.hour,
+              "subject": assignedFaculty.subject,
+              "faculty": assignedFaculty.faculty,
             },
           );
+          await pushNotificationController
+              .sendAssignedFacultyPushNotification(assignedFaculty);
+              
           break;
         }
       }

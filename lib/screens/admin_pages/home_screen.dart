@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:haajar_final/controllers/authentication_controller.dart';
-import 'package:haajar_final/screens/attendence_management_screen.dart';
-import 'package:haajar_final/screens/time_table_management_screen.dart';
+import 'package:haajar_final/screens/admin_pages/announcement/announcement_listing_screen.dart';
+import 'package:haajar_final/screens/admin_pages/attendence/attendence_management_screen.dart';
+import 'package:haajar_final/screens/admin_pages/timetable/time_table_management_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -50,6 +51,18 @@ class HomeScreen extends StatelessWidget {
                 }));
               },
               child: const Text("Time Table Management"),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return const AnnouncementListingScreen();
+                }));
+              },
+              child: const Text("Announcement Management"),
             ),
           ],
         ),

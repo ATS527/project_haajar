@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:haajar_final/controllers/timetable_controller.dart';
 import 'package:haajar_final/models/assigned_faculty.dart';
 import 'package:haajar_final/models/timetable_display.dart';
-import 'package:haajar_final/screens/time_table_subject_details_screen.dart';
+import 'package:haajar_final/screens/admin_pages/timetable/time_table_subject_details_screen.dart';
 
 class TimeTableDisplayScreen extends StatefulWidget {
   const TimeTableDisplayScreen({super.key});

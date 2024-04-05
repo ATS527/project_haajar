@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:haajar_final/controllers/attendence_controller.dart';
-import 'package:haajar_final/screens/attendence_summarizer_screen.dart';
+import 'package:haajar_final/screens/admin_pages/attendence/attendence_summarizer_screen.dart';
 import 'package:nearby_connections/nearby_connections.dart';
 import 'package:signals/signals_flutter.dart';
 

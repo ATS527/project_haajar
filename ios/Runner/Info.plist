@@ -43,6 +43,8 @@
 	</array>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>io.flutter.embedded_views_preview</key>
+	<true/>	
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>GIDClientID</key>
@@ -59,4 +61,5 @@
 		</dict>
 	</array>
 </dict>
+
 </plist>

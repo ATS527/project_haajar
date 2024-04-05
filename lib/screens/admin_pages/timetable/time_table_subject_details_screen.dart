@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:haajar_final/controllers/timetable_controller.dart';
+import 'package:haajar_final/models/assigned_faculty.dart';
 import 'package:haajar_final/models/timetable_display.dart';
 
 class TimeTableSubjectDetailsScreen extends StatefulWidget {
@@ -124,11 +125,13 @@ class _TimeTableSubjectDetailsScreenState
                                         onPressed: () async {
                                           timeTableController
                                               .assignFaculties(
-                                            year: widget.year,
-                                            day: widget.day,
-                                            faculty: teacher,
-                                            subject: widget.subjectName,
-                                            hour: widget.hour,
+                                            assignedFaculty: AssignedFaculty(
+                                              yearWithClass: widget.year,
+                                              day: widget.day,
+                                              hour: widget.hour,
+                                              subject: widget.subjectName,
+                                              faculty: widget.facultiesName,
+                                            ),
                                           )
                                               .then((value) {
                                             Navigator.of(context).pop();

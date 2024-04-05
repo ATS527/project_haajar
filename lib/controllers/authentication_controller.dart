@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:haajar_final/configs/push_notification_config.dart';
 import 'package:signals/signals.dart';
 
 class AuthController {
@@ -10,11 +11,14 @@ class AuthController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   void listenToAuthChanges() {
-    _auth.userChanges().listen((User? user) {
+    _auth.userChanges().listen((User? user) async {
       if (user == null) {
         currentlyLoggedInUser.value = null;
+        await PushNotifications.firebaseMessaging
+            .unsubscribeFromTopic("placement");
       } else {
         currentlyLoggedInUser.value = user;
+        await PushNotifications.firebaseMessaging.subscribeToTopic("placement");
       }
     });
   }

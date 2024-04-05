@@ -12,6 +12,7 @@ class AppwriteConfig {
       );
   late Account account = Account(client);
   late Databases db = Databases(client);
+  late Storage storage = Storage(client);
 }
 
 final appwrite = AppwriteConfig();
