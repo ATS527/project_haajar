@@ -1,28 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:haajar_final/controllers/authentication_controller.dart';
-import 'package:haajar_final/screens/admin_pages/announcement/announcement_listing_screen.dart';
-import 'package:haajar_final/screens/admin_pages/attendence/attendence_management_screen.dart';
-import 'package:haajar_final/screens/admin_pages/timetable/time_table_management_screen.dart';
+import 'package:haajar_final/screens/student_pages/announcement_student_screen.dart';
+import 'package:haajar_final/screens/student_pages/attendence_student_screen.dart';
+import 'package:haajar_final/screens/student_pages/time_table_student_screen.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class StudentHomeScreen extends StatefulWidget {
+  const StudentHomeScreen({super.key});
 
+  @override
+  State<StudentHomeScreen> createState() => _StudentHomeScreenState();
+}
+
+class _StudentHomeScreenState extends State<StudentHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Project Haajar (Admin)',
+          'Project Haajar',
           style: TextStyle(
             fontWeight: FontWeight.w900,
           ),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.logout),
             onPressed: () {
-              auth.signOut();
+              auth.signOut().then((value) {});
             },
+            icon: const Icon(Icons.logout),
           ),
         ],
       ),
@@ -35,10 +40,10 @@ class HomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
-                  return const AttendenceManagementScreen();
+                  return const AttendenceStudentScreen();
                 }));
               },
-              child: const Text("Attendence Management"),
+              child: const Text("Attendence Screen"),
             ),
             const SizedBox(
               height: 20,
@@ -47,10 +52,10 @@ class HomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
-                  return const TimeTableManagementScreen();
+                  return const TimeTableStudentScreen();
                 }));
               },
-              child: const Text("Time Table Management"),
+              child: const Text("Time Table Screen"),
             ),
             const SizedBox(
               height: 20,
@@ -59,10 +64,10 @@ class HomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
-                  return const AnnouncementListingScreen();
+                  return const AnnouncementStudentScreen();
                 }));
               },
-              child: const Text("Announcement Management"),
+              child: const Text("Announcement Screen"),
             ),
           ],
         ),

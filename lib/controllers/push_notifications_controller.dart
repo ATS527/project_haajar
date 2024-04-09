@@ -24,7 +24,30 @@ class PushNotificationsController {
         body: json.encode(body),
         headers: {
           "Content-Type": "application/json",
-          "API_KEY": dotenv.env["API_KEY"]!,
+          "api": dotenv.env["API_KEY"]!,
+        },
+      );
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<void> sendGeneralPushNotification(
+      String title, String description) async {
+    try {
+      var url = Uri.https(dotenv.env["SERVER_URL"]!, "sendGeneralNotification");
+
+      var body = {
+        'title': title,
+        'description': description,
+      };
+
+      await http.post(
+        url,
+        body: json.encode(body),
+        headers: {
+          "Content-Type": "application/json",
+          "api": dotenv.env["API_KEY"]!,
         },
       );
     } catch (err) {

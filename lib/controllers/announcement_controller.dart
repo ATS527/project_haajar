@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'dart:typed_data';
-import 'dart:ui';
 
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:haajar_final/configs/appwrite_config.dart';
+import 'package:haajar_final/controllers/push_notifications_controller.dart';
 import 'package:haajar_final/models/announcement.dart';
 import 'dart:io' as io;
 
@@ -28,6 +28,10 @@ class AnnouncementController {
   Future<Document> addAnnouncement(Announcement announcement) async {
     try {
       late String? fileId;
+
+      await pushNotificationController.sendGeneralPushNotification(
+          announcement.title, announcement.description);
+
       if (announcement.attachment != null) {
         fileId = uuid.v1();
         await appwrite.storage.createFile(
@@ -48,6 +52,7 @@ class AnnouncementController {
           "timestamp": announcement.timestamp.toIso8601String(),
         },
       );
+
       return result;
     } catch (err) {
       rethrow;
@@ -63,6 +68,12 @@ class AnnouncementController {
   }) async {
     try {
       String? newFileId = uuid.v1();
+
+      await pushNotificationController.sendGeneralPushNotification(
+        title ?? "Updated",
+        description ?? "Some announcement got updated!",
+      );
+
       if (fileId != null) {
         if (attachment != null) {
           await appwrite.storage.deleteFile(
@@ -119,7 +130,9 @@ class AnnouncementController {
     }
   }
 
-  Future<io.File> getAnnouncementAttachment(String fileId) async {
+  Future<io.File> getAnnouncementAttachment(
+    String fileId,
+  ) async {
     try {
       final response = await appwrite.storage.getFileView(
         fileId: fileId,
@@ -130,6 +143,8 @@ class AnnouncementController {
       //current path irrespective of platform
       final io.File file = io.File("${Directory.systemTemp.path}/$fileId.pdf");
       file.writeAsBytesSync(data);
+
+      print("worked");
       return file;
     } catch (err) {
       rethrow;

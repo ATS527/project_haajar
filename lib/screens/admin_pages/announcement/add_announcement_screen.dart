@@ -18,6 +18,8 @@ class _AddAnnouncementScreenState extends State<AddAnnouncementScreen> {
   late TextEditingController _titleController;
   late TextEditingController _descriptionController;
 
+  bool isLoading = false;
+
   String? validator(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter some text';
@@ -26,7 +28,6 @@ class _AddAnnouncementScreenState extends State<AddAnnouncementScreen> {
   }
 
   bool fileSelected = false;
-  bool isLoading = false;
   File? selectedFile;
 
   @override
@@ -79,7 +80,10 @@ class _AddAnnouncementScreenState extends State<AddAnnouncementScreen> {
               ElevatedButton(
                 onPressed: () async {
                   FilePickerResult? result =
-                      await FilePicker.platform.pickFiles();
+                      await FilePicker.platform.pickFiles(
+                    allowedExtensions: ["pdf"],
+                    type: FileType.custom,
+                  );
 
                   if (result != null) {
                     selectedFile = File(
@@ -95,35 +99,47 @@ class _AddAnnouncementScreenState extends State<AddAnnouncementScreen> {
               const SizedBox(
                 height: 20,
               ),
-              ElevatedButton(
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    await announcementController
-                        .addAnnouncement(
-                      Announcement(
-                        title: _titleController.value.text,
-                        timestamp: DateTime.now(),
-                        description: _descriptionController.value.text,
-                        attachment: selectedFile?.path,
-                      ),
-                    )
-                        .then((value) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Announcement added successfully'),
-                        ),
-                      );
-                    }).catchError((err) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(err.toString()),
-                        ),
-                      );
-                    });
-                  }
-                },
-                child: const Text('Submit'),
-              ),
+              isLoading
+                  ? const CircularProgressIndicator()
+                  : ElevatedButton(
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          await announcementController
+                              .addAnnouncement(
+                            Announcement(
+                              title: _titleController.value.text,
+                              timestamp: DateTime.now(),
+                              description: _descriptionController.value.text,
+                              attachment: selectedFile?.path,
+                            ),
+                          )
+                              .then((value) {
+                            setState(() {
+                              isLoading = false;
+                            });
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content:
+                                    Text('Announcement added successfully'),
+                              ),
+                            );
+                          }).catchError((err) {
+                            setState(() {
+                              isLoading = false;
+                            });
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(err.toString()),
+                              ),
+                            );
+                          });
+                        }
+                      },
+                      child: const Text('Submit'),
+                    ),
             ],
           )),
     );

@@ -33,6 +33,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
+  bloc:
+    dependency: transitive
+    description:
+      name: bloc
+      sha256: "106842ad6569f0b60297619e9e0b1885c2fb9bf84812935490e6c5275777804e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "8.1.4"
   boolean_selector:
     dependency: transitive
     description:
@@ -262,6 +270,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_bloc:
+    dependency: "direct main"
+    description:
+      name: flutter_bloc
+      sha256: f0ecf6e6eb955193ca60af2d5ca39565a86b8a142452c5b24d96fb477428f4d2
+      url: "https://pub.dev"
+    source: hosted
+    version: "8.1.5"
   flutter_dotenv:
     dependency: "direct main"
     description:
@@ -302,6 +318,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.0+1"
+  flutter_pdfview:
+    dependency: "direct main"
+    description:
+      name: flutter_pdfview
+      sha256: a9055bf920c7095bf08c2781db431ba23577aa5da5a056a7152dc89a18fbec6f
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.2"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -448,6 +472,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
+  location:
+    dependency: "direct main"
+    description:
+      name: location
+      sha256: "2d88e4ffb464d0ca5510e7edd29723ab762c43479de39d2d19ed6194f5b6d624"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.0.1"
+  location_platform_interface:
+    dependency: transitive
+    description:
+      name: location_platform_interface
+      sha256: "2ecde6bb0f88032b0bbbde37e18975b4468711dd92619c2235cc0c0ee93b4b8e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.0"
+  location_web:
+    dependency: transitive
+    description:
+      name: location_web
+      sha256: "15ad7b4c8a9f55abee513373755e093a40c04d7e24fc1b4f89676fe99523d034"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.1"
   matcher:
     dependency: transitive
     description:
@@ -480,6 +528,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.1"
+  nearby_service:
+    dependency: "direct main"
+    description:
+      name: nearby_service
+      sha256: "620eb6587c570fa3d90aaa3af58abc1f3d6d17af71c86f3e67d96f7f50b65c69"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.6"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      sha256: "03bac4c528c64c95c722ec99280375a6f2fc708eec17c7b3f07253b626cd2a20"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   package_info_plus:
     dependency: transitive
     description:
@@ -552,22 +616,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.1"
-  pdf_viewer_plugin:
-    dependency: "direct main"
-    description:
-      name: pdf_viewer_plugin
-      sha256: "1202453cc01b7d15049916ba58b777c561519b682d4b28d8cce2759090a0e3c4"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.1"
-  pedantic:
-    dependency: transitive
-    description:
-      name: pedantic
-      sha256: "67fc27ed9639506c856c840ccce7594d0bdcd91bc8d53d6e52359449a1d50602"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.11.1"
   permission_handler:
     dependency: "direct main"
     description:
@@ -640,6 +688,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+  provider:
+    dependency: transitive
+    description:
+      name: provider
+      sha256: c8a055ee5ce3fd98d6fc872478b03823ffdb448699c6ebdbbc71d59b596fd48c
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.1.2"
   signals:
     dependency: "direct main"
     description:

@@ -1,21 +1,28 @@
 import 'package:haajar_final/models/attendence.dart';
+import 'package:location/location.dart';
 import 'package:nearby_connections/nearby_connections.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:signals/signals_flutter.dart';
 
 class AttendenceController {
-  final discoveredDevices = listSignal<Attendence>([]);
+  final discoveredDevices = ListSignal<Attendence>([]);
 
-  Future<void> takePermission() async {
+  final nearbyConnection = Nearby();
+
+  Future<void> initialise() async {
     // location permission
-    if (!await Permission.location.isGranted) {
-      await Permission.location.request(); // Ask
-    }
+    await Permission.location.isGranted; // Check
+    await Permission.location.request(); // Ask
 
-    await Permission.nearbyWifiDevices.request();
+// location enable dialog
+    await Location.instance.requestService();
+
+// external storage permission
+    await Permission.storage.isGranted; // Check
+    await Permission.storage.request(); // Ask
 
 // Bluetooth permissions
-    !(await Future.wait([
+    bool granted = !(await Future.wait([
       // Check
       Permission.bluetooth.isGranted,
       Permission.bluetoothAdvertise.isGranted,
@@ -32,10 +39,18 @@ class AttendenceController {
     ].request();
   }
 
-  Future<void> startAdvertising(String? userName) async {
+  void disposeAdvertiser() async {
+    await nearbyConnection.stopAdvertising();
+  }
+
+  void disposeDiscoverer() async {
+    await nearbyConnection.stopDiscovery();
+  }
+
+  Future<void> startAdvertising(String? username) async {
     try {
-      bool a = await Nearby().startAdvertising(
-        userName!,
+      await nearbyConnection.startAdvertising(
+        username!,
         Strategy.P2P_STAR,
         onConnectionInitiated: (String id, ConnectionInfo info) {
           // Called whenever a discoverer requests connection
@@ -48,32 +63,36 @@ class AttendenceController {
         },
         serviceId: "com.example.haajar_final", // uniquely identifies your app
       );
-    } catch (exception) {
+    } catch (e) {
       // platform exceptions like unable to start bluetooth or insufficient permissions
-      rethrow;
+      print(e);
     }
   }
 
-  void startScanning(String? userName) async {
+  void startDiscovering(String? username) async {
     try {
-      bool a = await Nearby().startDiscovery(
-        userName!,
+      await nearbyConnection.startDiscovery(
+        username!,
         Strategy.P2P_STAR,
         onEndpointFound: (String id, String userName, String serviceId) {
           // called when an advertiser is found
-          discoveredDevices.value.add(
-            Attendence(id: id, userName: userName, serviceId: serviceId),
-          );
+          print("Endpoint found: $userName");
+          discoveredDevices.value.add(Attendence(
+            id: id,
+            userName: userName,
+            serviceId: serviceId,
+          ));
         },
         onEndpointLost: (String? id) {
           //called when an advertiser is lost (only if we weren't connected to it )
-          discoveredDevices.removeWhere((element) => element.id == id);
+          print("Endpoint lost: $username");
+          discoveredDevices.value.removeWhere((element) => element.id == id);
         },
         serviceId: "com.example.haajar_final", // uniquely identifies your app
       );
     } catch (e) {
       // platform exceptions like unable to start bluetooth or insufficient permissions
-      rethrow;
+      print(e);
     }
   }
 }

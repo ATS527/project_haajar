@@ -29,18 +29,28 @@ class _AttendenceSummarizerScreenState
       appBar: AppBar(
         title: const Text("Attendence Summarize"),
       ),
-      body: ListView(
-        children: [
-          ...widget.attendence.map((e) {
-            return ListTile(
-              title: Text(e.userName),
-              subtitle: Text(
-                "Total: ${e.id} | Attended: ${e.serviceId}",
-              ),
-            );
-          }),
-        ],
-      ),
+      body: widget.attendence.isNotEmpty
+          ? Column(
+              children: [
+                const SizedBox(height: 10),
+                Text("Attendence Count: ${widget.attendence.length}"),
+                ListView(
+                  children: [
+                    ...widget.attendence.map((e) {
+                      return ListTile(
+                        title: Text(e.userName),
+                        // subtitle: Text(
+                        //   "Total: ${e.id} | Attended: ${e.serviceId}",
+                        // ),
+                      );
+                    }),
+                  ],
+                ),
+              ],
+            )
+          : const Center(
+              child: Text("No Attendence Found"),
+            ),
     );
   }
 }

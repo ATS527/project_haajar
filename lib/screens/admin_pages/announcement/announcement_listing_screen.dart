@@ -97,7 +97,9 @@ class _AnnouncementListingScreenState extends State<AnnouncementListingScreen> {
                 return const AddAnnouncementScreen();
               },
             ),
-          );
+          ).then((value) {
+            setState(() {});
+          });
         },
         child: const Icon(Icons.add),
       ),

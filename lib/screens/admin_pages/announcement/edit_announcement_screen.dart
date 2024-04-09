@@ -80,6 +80,7 @@ class _EditAnnouncementScreenState extends State<EditAnnouncementScreen> {
             ElevatedButton(
               onPressed: () async {
                 if (widget.announcement.attachment != null) {
+                  print("worked here");
                   await announcementController
                       .getAnnouncementAttachment(
                           widget.announcement.attachment!)
@@ -129,7 +130,10 @@ class _EditAnnouncementScreenState extends State<EditAnnouncementScreen> {
                   child: const Text("Upload New Attachment"),
                   onPressed: () async {
                     FilePickerResult? result =
-                        await FilePicker.platform.pickFiles();
+                        await FilePicker.platform.pickFiles(
+                      allowedExtensions: ["pdf"],
+                      type: FileType.custom,
+                    );
 
                     if (result != null) {
                       selectedFile = File(

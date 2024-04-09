@@ -361,9 +361,28 @@ class TimeTableController {
           );
           await pushNotificationController
               .sendAssignedFacultyPushNotification(assignedFaculty);
-              
+
           break;
         }
+      }
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<void> deleteAllTimeTable() async {
+    try {
+      final result = await appwrite.db.listDocuments(
+        databaseId: '65d5a5cd5f8582b0a955',
+        collectionId: '65d5ba163ebf01cfc313',
+      );
+
+      for (var doc in result.documents) {
+        await appwrite.db.deleteDocument(
+          databaseId: '65d5a5cd5f8582b0a955',
+          collectionId: '65d5ba163ebf01cfc313',
+          documentId: doc.$id,
+        );
       }
     } catch (err) {
       rethrow;

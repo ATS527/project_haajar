@@ -17,6 +17,7 @@ class _TimeTableManagementScreenState extends State<TimeTableManagementScreen> {
   bool fileSelected = false;
   File? selectedFile;
   bool isLoading = false;
+  bool isLoading2 = false;
 
   @override
   Widget build(BuildContext context) {
@@ -127,6 +128,42 @@ class _TimeTableManagementScreenState extends State<TimeTableManagementScreen> {
               },
               child: const Text("Get Time Table"),
             ),
+            const SizedBox(
+              height: 30,
+            ),
+            !isLoading2
+                ? ElevatedButton(
+                    onPressed: () async {
+                      setState(() {
+                        isLoading2 = true;
+                      });
+                      timeTableController.deleteAllTimeTable().then((value) {
+                        setState(() {
+                          isLoading2 = false;
+                        });
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              "Time Table Deleted",
+                            ),
+                          ),
+                        );
+                      }).catchError((err) {
+                        setState(() {
+                          isLoading2 = false;
+                        });
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              err.toString(),
+                            ),
+                          ),
+                        );
+                      });
+                    },
+                    child: const Text("Delete All Time Table"),
+                  )
+                : const CircularProgressIndicator(),
           ],
         ),
       ),

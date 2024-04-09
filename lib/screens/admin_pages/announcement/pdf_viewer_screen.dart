@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:pdf_viewer_plugin/pdf_viewer_plugin.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
 
 class PdfViewerScreen extends StatefulWidget {
   const PdfViewerScreen({super.key, required this.pdfFile});
@@ -19,8 +19,30 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
       appBar: AppBar(
         title: const Text("PDF Viewer"),
       ),
-      body: PdfView(
-        path: widget.pdfFile.path,
+      body: PDFView(
+        filePath: widget.pdfFile.path,
+        enableSwipe: true,
+        swipeHorizontal: false,
+        autoSpacing: false,
+        pageFling: false,
+        onRender: (_pages) {
+          // setState(() {
+          //   pages = _pages;
+          //   isReady = true;
+          // });
+        },
+        onError: (error) {
+          print(error.toString());
+        },
+        onPageError: (page, error) {
+          print('$page: ${error.toString()}');
+        },
+        // onViewCreated: (PDFViewController pdfViewController) {
+        //   _controller.complete(pdfViewController);
+        // },
+        // onPageChanged: (int page, int total) {
+        //   print('page change: $page/$total');
+        // },
       ),
     );
   }

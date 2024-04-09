@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:haajar_final/controllers/attendence_controller.dart';
 import 'package:haajar_final/controllers/authentication_controller.dart';
 import 'package:haajar_final/screens/admin_pages/attendence/attendence_listing_screen.dart';
-import 'package:nearby_connections/nearby_connections.dart';
 
 class AttendenceManagementScreen extends StatefulWidget {
   const AttendenceManagementScreen({super.key});
@@ -15,15 +14,6 @@ class AttendenceManagementScreen extends StatefulWidget {
 class _AttendenceManagementScreenState
     extends State<AttendenceManagementScreen> {
   bool isInitiatedAttendence = false;
-  @override
-  void dispose() {
-    if (isInitiatedAttendence) {
-      Nearby().stopAdvertising();
-    }
-    super.dispose();
-  }
-
-  bool isInit = false;
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +33,10 @@ class _AttendenceManagementScreenState
           children: [
             ElevatedButton(
               onPressed: () async {
-                attendenceController.takePermission().then((value) {
+                attendenceController.initialise().then((value) {
                   attendenceController.discoveredDevices.value = [];
-                  attendenceController.startScanning(
-                    auth.currentlyLoggedInUser.value?.displayName,
+                  attendenceController.startDiscovering(
+                    auth.currentlyLoggedInUser.value!.displayName,
                   );
                   isInitiatedAttendence = true;
                   Navigator.of(context)
@@ -69,34 +59,6 @@ class _AttendenceManagementScreenState
             ),
             const SizedBox(
               height: 20,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                attendenceController
-                    .startAdvertising(
-                  auth.currentlyLoggedInUser.value?.displayName,
-                )
-                    .then((value) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                        "Attendence Given",
-                      ),
-                    ),
-                  );
-                }).catchError((err) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        err.toString(),
-                      ),
-                    ),
-                  );
-                });
-              },
-              child: const Text(
-                "Give Attendence",
-              ),
             ),
           ],
         ),

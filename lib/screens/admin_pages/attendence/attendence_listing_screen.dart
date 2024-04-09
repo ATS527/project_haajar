@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:haajar_final/controllers/attendence_controller.dart';
 import 'package:haajar_final/screens/admin_pages/attendence/attendence_summarizer_screen.dart';
-import 'package:nearby_connections/nearby_connections.dart';
 import 'package:signals/signals_flutter.dart';
 
 class AttendenceListingScreen extends StatefulWidget {
@@ -15,7 +14,7 @@ class AttendenceListingScreen extends StatefulWidget {
 class _AttendenceListingScreenState extends State<AttendenceListingScreen> {
   @override
   void dispose() {
-    Nearby().stopDiscovery();
+    attendenceController.disposeDiscoverer();
     super.dispose();
   }
 
