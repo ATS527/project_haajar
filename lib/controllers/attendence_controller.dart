@@ -19,17 +19,7 @@ class AttendenceController {
 
   void init(BuildContext context, String type) async {
     nearbyService = NearbyService();
-    String devInfo = '';
     await askPermissions(context);
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    if (Platform.isAndroid) {
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      devInfo = androidInfo.model;
-    }
-    if (Platform.isIOS) {
-      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-      devInfo = iosInfo.localizedModel;
-    }
     await nearbyService.init(
         serviceType: 'mpconn',
         deviceName: auth.currentlyLoggedInUser.value?.displayName,
@@ -51,7 +41,7 @@ class AttendenceController {
         });
     subscription =
         nearbyService.stateChangedSubscription(callback: (devicesList) {
-      devicesList.forEach((element) {
+      for (var element in devicesList) {
         print(
             " deviceId: ${element.deviceId} | deviceName: ${element.deviceName} | state: ${element.state}");
 
@@ -62,7 +52,7 @@ class AttendenceController {
             nearbyService.startBrowsingForPeers();
           }
         }
-      });
+      }
 
       discoveredDevices.value.clear();
       discoveredDevices.value.addAll(devicesList);
