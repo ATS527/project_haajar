@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:haajar_final/controllers/attendence_controller.dart';
-import 'package:haajar_final/controllers/authentication_controller.dart';
 
 class AttendenceStudentScreen extends StatefulWidget {
   const AttendenceStudentScreen({super.key});
@@ -12,62 +11,32 @@ class AttendenceStudentScreen extends StatefulWidget {
 
 class _AttendenceStudentScreenState extends State<AttendenceStudentScreen> {
   @override
+  void initState() {
+    // TODO: implement initState
+    attendenceController.init(context, "advertise");
+    super.initState();
+  }
+
+  @override
   void dispose() {
     // TODO: implement dispose
-    attendenceController.disposeAdvertiser();
+    attendenceController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Attendence Screen'),
-      ),
-      body: SizedBox(
-        width: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(
-              height: 30,
+        appBar: AppBar(
+          title: const Text(
+            'Attendence',
+            style: TextStyle(
+              fontWeight: FontWeight.w900,
             ),
-            ElevatedButton(
-              onPressed: () {
-                attendenceController
-                    .startAdvertising(
-                  auth.currentlyLoggedInUser.value?.displayName,
-                )
-                    .then((value) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                        "Attendence Given",
-                      ),
-                    ),
-                  );
-                }).catchError((err) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        err.toString(),
-                      ),
-                    ),
-                  );
-                });
-              },
-              child: const Text("Give Attendence"),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Text(
-              "(Please do continue on this screen till the Faculty completes the attendence Process)",
-              textAlign: TextAlign.center,
-            )
-          ],
+          ),
         ),
-      ),
-    );
+        body: const Center(
+          child: Text("You have given attendence kindly wait in the screen"),
+        ));
   }
 }

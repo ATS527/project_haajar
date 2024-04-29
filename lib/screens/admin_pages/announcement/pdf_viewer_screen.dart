@@ -25,12 +25,7 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
         swipeHorizontal: false,
         autoSpacing: false,
         pageFling: false,
-        onRender: (_pages) {
-          // setState(() {
-          //   pages = _pages;
-          //   isReady = true;
-          // });
-        },
+        onRender: (_pages) {},
         onError: (error) {
           print(error.toString());
         },

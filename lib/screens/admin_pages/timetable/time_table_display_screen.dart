@@ -273,7 +273,9 @@ class _TimeTableDisplayScreenState extends State<TimeTableDisplayScreen> {
                         hour: hoursOnDay[i],
                       );
                     },
-                  ));
+                  )).then((value) {
+                    setState(() {});
+                  });
                 },
                 title: Text("${hoursOnDay[i]}"),
                 subtitle: Column(

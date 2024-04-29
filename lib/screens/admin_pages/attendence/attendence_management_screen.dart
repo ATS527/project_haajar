@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:haajar_final/controllers/attendence_controller.dart';
-import 'package:haajar_final/controllers/authentication_controller.dart';
 import 'package:haajar_final/screens/admin_pages/attendence/attendence_listing_screen.dart';
 
 class AttendenceManagementScreen extends StatefulWidget {
@@ -33,25 +31,10 @@ class _AttendenceManagementScreenState
           children: [
             ElevatedButton(
               onPressed: () async {
-                attendenceController.initialise().then((value) {
-                  attendenceController.discoveredDevices.value = [];
-                  attendenceController.startDiscovering(
-                    auth.currentlyLoggedInUser.value!.displayName,
-                  );
-                  isInitiatedAttendence = true;
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return const AttendenceListingScreen();
-                  }));
-                }).catchError((err) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        err.toString(),
-                      ),
-                    ),
-                  );
-                });
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return const AttendenceListingScreen();
+                }));
               },
               child: const Text(
                 "Start Attendence",

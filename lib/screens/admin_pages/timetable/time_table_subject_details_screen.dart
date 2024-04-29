@@ -130,7 +130,7 @@ class _TimeTableSubjectDetailsScreenState
                                               day: widget.day,
                                               hour: widget.hour,
                                               subject: widget.subjectName,
-                                              faculty: widget.facultiesName,
+                                              faculty: teacher,
                                             ),
                                           )
                                               .then((value) {
@@ -142,6 +142,7 @@ class _TimeTableSubjectDetailsScreenState
                                                     "Teacher Assigned Successfully"),
                                               ),
                                             );
+                                            setState(() {});
                                           }).catchError((err) {
                                             Navigator.of(context).pop();
                                             ScaffoldMessenger.of(context)

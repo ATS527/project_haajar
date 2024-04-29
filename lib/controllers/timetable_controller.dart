@@ -306,8 +306,6 @@ class TimeTableController {
           "days": _1aiDays
         },
       );
-
-      print("save done");
     } catch (err) {
       rethrow;
     }

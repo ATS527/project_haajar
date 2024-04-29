@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:haajar_final/controllers/authentication_controller.dart';
+import 'package:lottie/lottie.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});
@@ -16,16 +17,16 @@ class SignInScreen extends StatelessWidget {
       body: SizedBox(
         width: double.infinity,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Lottie.asset(
+                "assets/animations/college_management_system_animation.json"),
             const SizedBox(
-              height: 70,
+              height: 40,
             ),
             ElevatedButton(
               onPressed: () {
-                auth.handleGoogleSignin().then((value) {
-                  
-                }).catchError((err) {
+                auth.handleGoogleSignin().then((value) {}).catchError((err) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text("Error: $err"),

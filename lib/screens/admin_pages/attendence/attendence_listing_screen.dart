@@ -1,6 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:haajar_final/controllers/attendence_controller.dart';
-import 'package:haajar_final/screens/admin_pages/attendence/attendence_summarizer_screen.dart';
+import 'package:light_flutter_nearby_connections/light_flutter_nearby_connections.dart';
 import 'package:signals/signals_flutter.dart';
 
 class AttendenceListingScreen extends StatefulWidget {
@@ -12,74 +14,63 @@ class AttendenceListingScreen extends StatefulWidget {
 }
 
 class _AttendenceListingScreenState extends State<AttendenceListingScreen> {
+  late NearbyService nearbyService;
+  late StreamSubscription subscription;
+
+  final discoveredDevices = signal([]);
+
+  bool isInit = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    attendenceController.init(context, "browser");
+    super.initState();
+  }
+
   @override
   void dispose() {
-    attendenceController.disposeDiscoverer();
+    // TODO: implement dispose
+    attendenceController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Attendence Listing',
-          style: TextStyle(
-            fontWeight: FontWeight.w900,
-          ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              setState(() {});
-            },
-            icon: const Icon(
-              Icons.refresh,
+        appBar: AppBar(
+          title: const Text(
+            'Attendence Listing',
+            style: TextStyle(
+              fontWeight: FontWeight.w900,
             ),
           ),
-        ],
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Watch(
-            (context) {
-              if (attendenceController.discoveredDevices.isEmpty) {
+          actions: [
+            IconButton(
+              onPressed: () {
+                setState(() {});
+              },
+              icon: const Icon(Icons.refresh),
+            ),
+          ],
+        ),
+        body: Watch(
+          (context) => ListView.builder(
+            itemCount: attendenceController.discoveredDevices.value.length,
+            itemBuilder: (context, index) {
+              if (attendenceController.discoveredDevices.value.isEmpty) {
                 return const Center(
-                  child: Text("No Devices Found"),
+                  child: Text("No devices found"),
                 );
               }
-              return ListView.builder(
-                itemCount: attendenceController.discoveredDevices.value.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(
-                      attendenceController
-                          .discoveredDevices.value[index].userName,
-                    ),
-                    subtitle: Text(
-                      attendenceController.discoveredDevices.value[index].id,
-                    ),
-                  );
-                },
+              return ListTile(
+                title: Text(attendenceController
+                    .discoveredDevices.value[index].deviceName),
+                subtitle: Text(attendenceController
+                    .discoveredDevices.value[index].deviceId),
               );
             },
           ),
-          const SizedBox(
-            height: 30,
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return AttendenceSummarizerScreen(
-                  attendence: attendenceController.discoveredDevices.value,
-                );
-              }));
-            },
-            child: const Text("Summarize Attendence"),
-          ),
-        ],
-      ),
-    );
+        ));
   }
 }

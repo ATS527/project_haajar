@@ -1,16 +1,22 @@
-# haajar_final
+# project_haajar
 
-A new Flutter project.
+### Final Year Project
+> A College Management Software to possibly replace existing Ezygo Solution, thereby providing a cost-efficient, easy-to-use platform for students and faculties.
 
-## Getting Started
+## Work Done
 
-This project is a starting point for a Flutter application.
+* Setup Appwrite
+* Email Sign in,Logout
+* Splash Screen
 
-A few resources to get you started if this is your first Flutter project:
+## Initial Setup
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+* create .env file with the format 
+```
+appwrite_endpoint="your-appwrite-endpoint"
+project_id="your-appwrite-project-id"
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+* flutter pub get
+
+* flutter run

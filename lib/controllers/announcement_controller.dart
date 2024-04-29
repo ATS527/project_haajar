@@ -18,7 +18,11 @@ class AnnouncementController {
       final result = await appwrite.db.listDocuments(
           databaseId: "660d615ce0e16c125164",
           collectionId: "660d62d13db053085175");
-
+      //sort according to decreasing timestamp
+      result.documents.sort((a, b) {
+        return DateTime.parse(b.data["timestamp"])
+            .compareTo(DateTime.parse(a.data["timestamp"]));
+      });
       return result.documents;
     } catch (err) {
       rethrow;

@@ -53,6 +53,10 @@ dependencies:
   flutter_bloc: ^8.1.5
   nearby_connections: ^4.0.1
   location: ^6.0.1
+  lottie: ^3.1.0
+  light_flutter_nearby_connections: ^0.0.4
+  flutter_styled_toast: ^2.2.1
+  device_info_plus: ^10.1.0
   
 dev_dependencies:
   flutter_test:
@@ -80,7 +84,8 @@ flutter:
   assets:
     - assets/images/
     - .env
-  #   - images/a_dot_ham.jpeg
+    - assets/animations/
+    # - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

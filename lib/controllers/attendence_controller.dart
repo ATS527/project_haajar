@@ -1,98 +1,118 @@
-import 'package:haajar_final/models/attendence.dart';
-import 'package:location/location.dart';
-import 'package:nearby_connections/nearby_connections.dart';
+import 'dart:async';
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/material.dart';
+import 'package:haajar_final/controllers/authentication_controller.dart';
+import 'package:light_flutter_nearby_connections/light_flutter_nearby_connections.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:signals/signals_flutter.dart';
 
 class AttendenceController {
-  final discoveredDevices = ListSignal<Attendence>([]);
+  late NearbyService nearbyService;
+  late StreamSubscription subscription;
 
-  final nearbyConnection = Nearby();
+  final discoveredDevices = signal([]);
 
-  Future<void> initialise() async {
-    // location permission
-    await Permission.location.isGranted; // Check
-    await Permission.location.request(); // Ask
+  bool isInit = false;
 
-// location enable dialog
-    await Location.instance.requestService();
-
-// external storage permission
-    await Permission.storage.isGranted; // Check
-    await Permission.storage.request(); // Ask
-
-// Bluetooth permissions
-    bool granted = !(await Future.wait([
-      // Check
-      Permission.bluetooth.isGranted,
-      Permission.bluetoothAdvertise.isGranted,
-      Permission.bluetoothConnect.isGranted,
-      Permission.bluetoothScan.isGranted,
-    ]))
-        .any((element) => false);
-    [
-      // Ask
-      Permission.bluetooth,
-      Permission.bluetoothAdvertise,
-      Permission.bluetoothConnect,
-      Permission.bluetoothScan
-    ].request();
-  }
-
-  void disposeAdvertiser() async {
-    await nearbyConnection.stopAdvertising();
-  }
-
-  void disposeDiscoverer() async {
-    await nearbyConnection.stopDiscovery();
-  }
-
-  Future<void> startAdvertising(String? username) async {
-    try {
-      await nearbyConnection.startAdvertising(
-        username!,
-        Strategy.P2P_STAR,
-        onConnectionInitiated: (String id, ConnectionInfo info) {
-          // Called whenever a discoverer requests connection
-        },
-        onConnectionResult: (String id, Status status) {
-          // Called when connection is accepted/rejected
-        },
-        onDisconnected: (String id) {
-          // Callled whenever a discoverer disconnects from advertiser
-        },
-        serviceId: "com.example.haajar_final", // uniquely identifies your app
-      );
-    } catch (e) {
-      // platform exceptions like unable to start bluetooth or insufficient permissions
-      print(e);
+  void init(BuildContext context, String type) async {
+    nearbyService = NearbyService();
+    String devInfo = '';
+    await askPermissions(context);
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      devInfo = androidInfo.model;
     }
+    if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      devInfo = iosInfo.localizedModel;
+    }
+    await nearbyService.init(
+        serviceType: 'mpconn',
+        deviceName: auth.currentlyLoggedInUser.value?.displayName,
+        strategy: Strategy.Wi_Fi_P2P,
+        callback: (isRunning) async {
+          if (isRunning) {
+            if (type == "browser") {
+              await nearbyService.stopBrowsingForPeers();
+              await Future.delayed(const Duration(microseconds: 200));
+              await nearbyService.startBrowsingForPeers();
+            } else {
+              await nearbyService.stopAdvertisingPeer();
+              await nearbyService.stopBrowsingForPeers();
+              await Future.delayed(const Duration(microseconds: 200));
+              await nearbyService.startAdvertisingPeer();
+              await nearbyService.startBrowsingForPeers();
+            }
+          }
+        });
+    subscription =
+        nearbyService.stateChangedSubscription(callback: (devicesList) {
+      devicesList.forEach((element) {
+        print(
+            " deviceId: ${element.deviceId} | deviceName: ${element.deviceName} | state: ${element.state}");
+
+        if (Platform.isAndroid) {
+          if (element.state == SessionState.connected) {
+            nearbyService.stopBrowsingForPeers();
+          } else {
+            nearbyService.startBrowsingForPeers();
+          }
+        }
+      });
+
+      discoveredDevices.value.clear();
+      discoveredDevices.value.addAll(devicesList);
+    });
   }
 
-  void startDiscovering(String? username) async {
+  void dispose() {
+    subscription.cancel();
+    nearbyService.stopBrowsingForPeers();
+    nearbyService.stopAdvertisingPeer();
+  }
+
+  Future<void> askPermissions(BuildContext context) async {
+    final info = await DeviceInfoPlugin().androidInfo;
+    var errors = [];
+    final explicitPermissions = [
+      Permission.locationWhenInUse, // Always?
+      Permission.location, // Always?
+      // Android 12 and higher
+      if (info.version.sdkInt >= 31) Permission.bluetoothAdvertise,
+      if (info.version.sdkInt >= 31) Permission.bluetoothConnect,
+      if (info.version.sdkInt >= 31) Permission.bluetoothScan,
+      // Android 13 and higher
+      if (info.version.sdkInt >= 33) Permission.nearbyWifiDevices,
+    ];
     try {
-      await nearbyConnection.startDiscovery(
-        username!,
-        Strategy.P2P_STAR,
-        onEndpointFound: (String id, String userName, String serviceId) {
-          // called when an advertiser is found
-          print("Endpoint found: $userName");
-          discoveredDevices.value.add(Attendence(
-            id: id,
-            userName: userName,
-            serviceId: serviceId,
-          ));
-        },
-        onEndpointLost: (String? id) {
-          //called when an advertiser is lost (only if we weren't connected to it )
-          print("Endpoint lost: $username");
-          discoveredDevices.value.removeWhere((element) => element.id == id);
-        },
-        serviceId: "com.example.haajar_final", // uniquely identifies your app
-      );
+      if (explicitPermissions.isNotEmpty) {
+        final other = await explicitPermissions.request();
+        final locationStatus = await Permission.location.status;
+        if (!locationStatus.isGranted) {
+          errors.add("Location is not enabled");
+        }
+        final otherPermissions =
+            !other.values.any((element) => !element.isGranted);
+        if (!otherPermissions) {
+          errors.add("Some permissions weren't given");
+        }
+        log("requestPermissions granted: $other");
+      }
     } catch (e) {
-      // platform exceptions like unable to start bluetooth or insufficient permissions
-      print(e);
+      errors.add("Error occurred while requesting permissions");
+    }
+    if (errors.isNotEmpty) {
+      log("ERROR: requestPermissions failed: $errors");
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          content: Text("Errors:\n\n${errors.join("\n")}"),
+        ),
+      );
     }
   }
 }

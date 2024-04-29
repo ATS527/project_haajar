@@ -34,8 +34,15 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
       body: SizedBox(
         width: double.infinity,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(
+              "Welcome, ${auth.currentlyLoggedInUser.value?.displayName}",
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
+            ),
+            const Divider(),
+            const SizedBox(
+              height: 120,
+            ),
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context)
