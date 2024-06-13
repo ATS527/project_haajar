@@ -53,7 +53,7 @@ class CustomRouter {
                           ),
                           GoRoute(
                             path: 'add-time-table-screen',
-                            builder: (context, state) => AddTimeTableScreen(),
+                            builder: (context, state) => const AddTimeTableScreen(),
                           ),
                         ]),
                     GoRoute(

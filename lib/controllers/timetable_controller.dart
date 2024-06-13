@@ -1,6 +1,7 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:project_haajar/config/database_config.dart';
+import 'package:project_haajar/models/timetable_display.dart';
 import '../models/timetable.dart';
 
 class TimeTableManagement {
@@ -223,13 +224,42 @@ class TimeTableManagement {
     }
   }
 
+  Future<List<TimeTableDisplay>> getAllTimeTable() async {
+    try {
+      final document = await databaseClient.value.listDocuments(
+        databaseId: '65d5a5cd5f8582b0a955',
+        collectionId: '65d5ba163ebf01cfc313',
+      );
+
+      List<TimeTableDisplay> timeTableDisplay = document.documents
+          .map((e) => TimeTableDisplay(
+                yearWithClass: e.data['yearWithClass'],
+                hours:
+                    e.data['hours'].map<String>((e) => e.toString()).toList(),
+                subjects: e.data['subjects']
+                    .map<String>((e) => e.toString())
+                    .toList(),
+                days: e.data['days'].map<String>((e) => e.toString()).toList(),
+                teachers: e.data['teachers']
+                    .map<String>((e) => e.toString())
+                    .toList(),
+              ))
+          .toList();
+
+      print(timeTableDisplay);
+
+      return timeTableDisplay;
+    } catch (err) {
+      rethrow;
+    }
+  }
+
   Future<DocumentList> getAllFaculties() async {
     try {
       final document = await databaseClient.value.listDocuments(
         databaseId: 'faculty',
         collectionId: 'faculty_details',
       );
-      print(document.documents[0].data);
       return document;
     } catch (err) {
       rethrow;

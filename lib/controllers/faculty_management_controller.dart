@@ -14,17 +14,18 @@ class FacultyManagement {
   }) {
     try {
       final document = databaseClient.value.createDocument(
-          databaseId: 'faculty',
-          collectionId: 'faculty_details',
-          documentId: ID.unique(),
-          data: {
-            "name": name,
-            "faculty_mail": mail,
-            "department": department.name,
-            "subjects": subjects,
-            "qualification": qualification,
-            "experience": experience == "" ? 0.0 : double.parse(experience),
-          });
+        databaseId: 'faculty',
+        collectionId: 'faculty_details',
+        documentId: ID.unique(),
+        data: {
+          "name": name,
+          "faculty_mail": mail,
+          "department": department.name,
+          "subjects": subjects,
+          "qualification": qualification,
+          "experience": experience == "" ? 0.0 : double.parse(experience),
+        },
+      );
       return document;
     } catch (_) {
       rethrow;
